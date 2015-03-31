@@ -1,0 +1,10 @@
+{
+  "name": "beautyhunt-node",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "author": "Monty Lennie <montylennie@gmail.com>",
+  "dependencies": {
+    "express": "4.x.x"
+  }
+}
