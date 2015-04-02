@@ -1,0 +1,1 @@
+/Users/montylennie/Documents/beautyhunt/ember/tmp/funnel-dest_KzQdZO.tmp/ember-qunit-notifications/README.md

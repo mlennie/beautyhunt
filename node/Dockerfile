@@ -4,7 +4,7 @@ RUN apt-get update
 RUN apt-get install -y nodejs npm
 #VOLUME ["/opt/beautyapp"]
 #RUN cd /opt/beautyapp/node/; npm install
-#EXPOSE 8080
+EXPOSE 8080
 #CMD ["nodejs", "/node/index.js"]
 
 #start bash

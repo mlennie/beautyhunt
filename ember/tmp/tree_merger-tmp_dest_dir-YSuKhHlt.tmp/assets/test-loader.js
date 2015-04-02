@@ -1,0 +1,1 @@
+/Users/montylennie/Documents/beautyhunt/ember/bower_components/ember-cli-test-loader/test-loader.js

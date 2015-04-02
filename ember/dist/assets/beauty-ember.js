@@ -90,11 +90,11 @@ define('beauty-ember/templates/application', ['exports'], function (exports) {
         var el2 = dom.createTextNode("Welcome to Beauty Hunt!");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n\n");
+        var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
+        var el1 = dom.createTextNode("\n\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -248,7 +248,7 @@ catch(err) {
 if (runningTests) {
   require("beauty-ember/tests/test-helper");
 } else {
-  require("beauty-ember/app")["default"].create({"name":"beauty-ember","version":"0.0.0."});
+  require("beauty-ember/app")["default"].create({"name":"beauty-ember","version":"0.0.0.d092dd87"});
 }
 
 /* jshint ignore:end */

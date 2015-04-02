@@ -1,0 +1,1 @@
+/Users/montylennie/Documents/beautyhunt/ember/tmp/babel-tmp_dest_dir-5ugMORZM.tmp/beauty-ember/tests/test-helper.js

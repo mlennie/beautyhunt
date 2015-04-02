@@ -1,0 +1,1 @@
+/Users/montylennie/Documents/beautyhunt/ember/tmp/custom_replace-tmp_dest_dir-YAJPbifq.tmp/test-support-suffix.js

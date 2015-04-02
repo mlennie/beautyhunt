@@ -1,0 +1,1 @@
+/Users/montylennie/Documents/beautyhunt/ember/tmp/tree_merger-tmp_dest_dir-J9TJSUKd.tmp/beauty-ember/templates/application.js
