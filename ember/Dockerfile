@@ -10,6 +10,7 @@ RUN sudo apt-get install -y nodejs git
 RUN npm install -g ember-cli bower phantomjs
 EXPOSE 4200 35729
 WORKDIR /webapp/Users/montylennie/Documents/beautyhunt/ember
+RUN ember install:npm ember-cli-emblem-hbs-printer
 CMD ["ember", "serve", "--watcher", "polling"]
 
 #docker run -i -t -p 4200:4200 --name beautyember  -v /Users/montylennie/documents/beautyhunt/ember/:/opt/beautyapp mlennie/beauty-ember bash
