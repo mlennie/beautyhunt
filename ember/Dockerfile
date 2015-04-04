@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y curl
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup | bash -
 RUN sudo apt-get install -y nodejs git 
-RUN npm install -g ember-cli bower phantomjs
+RUN npm install -g ember-cli@0.2.2 bower@1.4.1 phantomjs@1.9.8
 EXPOSE 4200 35729
 WORKDIR /webapp/Users/montylennie/Documents/beautyhunt/ember
 RUN ember install:npm ember-cli-emblem-hbs-printer

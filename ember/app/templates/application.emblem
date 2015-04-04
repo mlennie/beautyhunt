@@ -1,3 +1,4 @@
 h2#title Welcome to Beauty Hunt!
+button.btn.btn-success Hello
 outlet
 

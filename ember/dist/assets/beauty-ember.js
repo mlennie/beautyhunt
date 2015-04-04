@@ -90,6 +90,11 @@ define('beauty-ember/templates/application', ['exports'], function (exports) {
         var el2 = dom.createTextNode("Welcome to Beauty Hunt!");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
+        var el1 = dom.createElement("button");
+        dom.setAttribute(el1,"class","btn btn-success");
+        var el2 = dom.createTextNode("Hello");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         return el0;
@@ -114,7 +119,7 @@ define('beauty-ember/templates/application', ['exports'], function (exports) {
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
+        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
         dom.insertBoundary(fragment, null);
         content(env, morph0, context, "outlet");
         return fragment;
@@ -245,7 +250,7 @@ catch(err) {
 if (runningTests) {
   require("beauty-ember/tests/test-helper");
 } else {
-  require("beauty-ember/app")["default"].create({"name":"beauty-ember","version":"0.0.0.08d95a2f"});
+  require("beauty-ember/app")["default"].create({"name":"beauty-ember","version":"0.0.0.17847387"});
 }
 
 /* jshint ignore:end */
