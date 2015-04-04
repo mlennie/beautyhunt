@@ -1,1 +1,103 @@
-/*@import 'bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap';*/
+@import "header.scss";
+@import "footer.scss";
+
+html, body {
+  margin: 0px;
+  line-height: 1.5;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.no-transformation { text-transform: none !important; }
+
+/* text color */
+
+.grey { color: #999; }
+
+.black { color: #000; }
+
+.white { color: #fff; }
+
+.gold { color: #CB9A4E; }
+
+.red { color: red; }
+
+.inline { display: inline; }
+
+hr.black-line { border-bottom: 1px solid #000; }
+
+.no-background { background: none !important;}
+
+.grey-background { background-color: #ECECEC; }
+
+.white-background { background-color: #fff; }
+
+.light-black-background { background-color: #4F4F4F; }
+
+.red-background { background-color: red;}
+
+/* padding */
+
+.no-padding { padding: 0 !important; }
+
+.padding-5 { padding: 5px !important; }
+
+.padding-10 { padding: 10px !important; }
+
+.padding-15 { padding: 15px !important; }
+
+.padding-20 { padding: 20px !important; }
+
+.padding-top-5 { padding-top: 5px !important; }
+
+.padding-left-5 { padding-left: 5px !important; }
+
+/* margin */
+
+.no-margin { margin: 0 !important; }
+
+.margin-10 { margin: 10 !important; }
+
+.no-margin-top { margin-top: 0 !important; }
+
+.margin-2 { margin: 2px; }
+
+.margin-top-5 { margin-top: 5px !important; }
+
+.margin-top-10 { margin-top: 10px !important; }
+
+.margin-top-20 { margin-top: 20px !important; }
+
+.margin-top-40 { margin-top: 40px !important; }
+
+.margin-top-60 { margin-top: 60px; }
+
+.margin-top-70 { margin-top: 70px; }
+
+.margin-right-5 { margin-right: 5px; }
+
+.margin-right-10 { margin-right: 10px !important; }
+
+.margin-bottom-10 { margin-bottom: 10px; }
+
+.margin-bottom-15 { margin-bottom: 15px; }
+
+.margin-bottom-20 { margin-bottom: 20px; }
+
+.margin-left-10 { margin-left: 10px; }
+
+.margin-left-15 { margin-left: 15px; }
+
+.margin-left-20 { margin-left: 20px; }
+
+/* width */
+
+.full-width { width: 100%; }
+
+.half-width { width: 50%; }

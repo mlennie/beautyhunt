@@ -85,17 +85,23 @@ define('beauty-ember/templates/application', ['exports'], function (exports) {
       hasRendered: false,
       build: function build(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createElement("h2");
-        dom.setAttribute(el1,"id","title");
-        var el2 = dom.createTextNode("Welcome to Beauty Hunt!");
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1,"class","container");
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2,"class","row");
+        var el3 = dom.createElement("h2");
+        dom.setAttribute(el3,"id","title");
+        var el4 = dom.createTextNode("Welcome to Beauty Hunt!");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("button");
+        dom.setAttribute(el3,"class","btn btn-success");
+        var el4 = dom.createTextNode("Hello");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
         dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
-        var el1 = dom.createElement("button");
-        dom.setAttribute(el1,"class","btn btn-success");
-        var el2 = dom.createTextNode("Hello");
+        var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
-        var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -119,8 +125,7 @@ define('beauty-ember/templates/application', ['exports'], function (exports) {
         } else {
           fragment = this.build(dom);
         }
-        var morph0 = dom.createMorphAt(fragment,2,2,contextualElement);
-        dom.insertBoundary(fragment, null);
+        var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),1,1);
         content(env, morph0, context, "outlet");
         return fragment;
       }

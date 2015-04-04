@@ -1,0 +1,24 @@
+.navbar {
+  border-radius: 0px;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+#main-nav-dropdown {
+  z-index: 3;
+}
+
+#main-content {
+  margin-top: 70;
+}
+
+.center {
+  text-align: center;
+}
+
+.fixed-nav {
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  padding: 0;
+}
