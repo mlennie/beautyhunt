@@ -1,0 +1,25 @@
+#index-page
+	br
+	br
+	br
+	br
+	.container
+		.row
+			h1.center Beauty Insider
+		.row#product-boxes
+			.col-sm-4
+				.product-box
+					h4.center Beauty Products
+			.col-sm-4
+				.product-box
+					h4.center Fashion
+			.col-sm-4
+				.product-box
+					h4.center Accessories
+		.row
+			.col-sm-6.col-sm-offset-3
+				h5.center Hot products
+				ul.list-group
+					li.list-group-item
+						span.badge 495
+						p Chanel Love Perfum

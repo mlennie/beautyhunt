@@ -7,6 +7,7 @@
 					span.icon-bar
 					span.icon-bar
 					span.icon-bar
+				h4 Beauty Hunt
 			.collapse.navbar-collapse#navbar-collapse-1
 				ul.nav.navbar-nav.navbar-right
 					if session.isAuthenticated
@@ -22,8 +23,8 @@
 								li
 									a{action 'invalidateSession'} Se déconnecter
 					else
-						li register
-						li login
+						li.nav-link register
+						li.nav-link login
 	if session.isAuthenticated
 		unless session.currentUser.isOwner
 			.visible-md-block.visible-lg-block

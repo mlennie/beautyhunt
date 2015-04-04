@@ -1,4 +1,5 @@
 @import "header.scss";
+@import "index.scss";
 @import "footer.scss";
 
 html, body {
@@ -13,6 +14,8 @@ html {
   position: relative;
   min-height: 100%;
 }
+
+.center { text-align: center; }
 
 .no-transformation { text-transform: none !important; }
 
