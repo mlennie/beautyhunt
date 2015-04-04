@@ -9,7 +9,8 @@ RUN curl -sL https://deb.nodesource.com/setup | bash -
 RUN sudo apt-get install -y nodejs git 
 RUN npm install -g ember-cli bower phantomjs
 EXPOSE 4200 35729
-WORKDIR /webapp/Users/montylennie/Documents/beautyhunt
+WORKDIR /webapp/Users/montylennie/Documents/beautyhunt/ember
+CMD ["ember", "serve", "--watcher", "polling"]
 
 #docker run -i -t -p 4200:4200 --name beautyember  -v /Users/montylennie/documents/beautyhunt/ember/:/opt/beautyapp mlennie/beauty-ember bash
 

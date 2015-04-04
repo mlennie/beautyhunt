@@ -41,12 +41,12 @@ Vagrant.configure("2") do |config|
   else
     # Uncomment for better performance on Mac (mount via NFS).
     # See https://github.com/mitchellh/vagrant/issues/2304 for why NFS over TCP may be better than over UDP.
-    #config.vm.synced_folder vagrant_root, vagrant_root, type: "nfs", mount_options: ["nolock", "vers=3", "udp"]
-    config.vm.synced_folder vagrant_root, vagrant_mount, type: "nfs", mount_options: ["nolock", "vers=3", "tcp"]
+     #config.vm.synced_folder vagrant_root, vagrant_root, type: "nfs", mount_options: ["nolock", "vers=3", "udp"]
+    #config.vm.synced_folder vagrant_root, vagrant_mount, type: "nfs", mount_options: ["nolock", "vers=3", "tcp"]
     
     # This uses uid and gid of the user that started vagrant.
-    config.nfs.map_uid = Process.uid
-    config.nfs.map_gid = Process.gid
+    #config.nfs.map_uid = Process.uid
+    #config.nfs.map_gid = Process.gid
   end
 
   # Cross-platform: vboxfs
@@ -55,7 +55,11 @@ Vagrant.configure("2") do |config|
   
   # Cross-platform: rsync
   # Uncomment for the best performance (using rsync). Run `vagrant rsync-auto` to start auto sync.
-  #config.vm.synced_folder vagrant_root, vagrant_mount, type: "rsync", rsync__exclude: ".git/"
+  config.vm.synced_folder vagrant_root, vagrant_mount, type: "rsync", rsync__exclude: ".git/", rsync__args: "-a", rsync__exclude: "/Users/montylennie/Documents/beautyhunt/ember/tmp/"
+  # Configure the window for gatling to coalesce writes.
+  if Vagrant.has_plugin?("vagrant-gatling-rsync")
+    config.gatling.time_format = "%H:%M:%S"
+  end
   
   ####################################################################
 
