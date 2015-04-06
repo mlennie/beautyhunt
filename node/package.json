@@ -5,6 +5,7 @@
   "description": "",
   "author": "Monty Lennie <montylennie@gmail.com>",
   "dependencies": {
+    "body-parser": "^1.12.2",
     "express": "4.x.x"
   }
 }
