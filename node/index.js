@@ -1,10 +1,27 @@
 var express = require('express'),
-		bcrypt = require('bcryptjs');
+		mongoose = require('mongoose'),
+		bcrypt = require('bcryptjs'),
     bodyParser = require('body-parser');
  
 var PORT = process.env.PORT || 8080;
  
 var app = express();
+
+var IP = process.env.MONGODB_PORT_27017_TCP_ADDR
+var PORT = process.env.MONGODB_PORT_27017_TCP_PORT
+mongoose.connect('mongodb://' + IP + ':' + PORT + '/' + 'beauty-dev');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+
+  var userSchema = mongoose.Schema({
+    username: String,
+    email: String,
+    passwordHash: String
+	});
+});
+
 
 var hashPassword = function (user, callback) {
   bcrypt.hash(user.password, 10, function(error, hash) {
