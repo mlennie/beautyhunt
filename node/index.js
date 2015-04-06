@@ -1,11 +1,34 @@
 var express = require('express'),
 		mongoose = require('mongoose'),
 		bcrypt = require('bcryptjs'),
+		nodemailer = require('nodemailer'),
+		nodemailerHandlebars = require('nodemailer-express-handlebars'),
     bodyParser = require('body-parser');
+
+var mailerOptions = {
+     viewEngine: {
+         extname: '.hbs',
+         layoutsDir: 'views/email/',
+         defaultLayout : 'template',
+         partialsDir : 'views/partials/'
+     },
+     viewPath: 'views/email/',
+     extName: '.hbs'
+ };
  
 var PORT = process.env.PORT || 8080;
  
 var app = express();
+
+//EMAILING: create reusable transporter object using SMTP transport 
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'beautyhuntapp@gmail.com',
+        pass: 'beautyhunt123'
+    }
+});
+transporter.use('compile', nodemailerHandlebars(mailerOptions));
 
 var IP = process.env.MONGODB_PORT_27017_TCP_ADDR
 var MONGOPORT = process.env.MONGODB_PORT_27017_TCP_PORT
@@ -38,17 +61,51 @@ db.once('open', function (callback) {
 	});
 
 	app.post('/users', function(req, res) {
+
+		//encrypt password
+		var password = req.body.user.password
 		bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(req.body.password, salt, function(err, hash) {
+			if (err) return console.error(err);
+	    bcrypt.hash(password, salt, function(err, hash) {
+	    	if (err) return console.error(err);
+
+	    	//create user
 	    	var user = new User({ 
-	    		username: req.body.username,
-	    		email: req.body.email,
+	    		username: req.body.user.username,
+	    		email: req.body.user.email,
 	    		passwordHash: hash 
 	    	})
 	    	user.save(function (err, user) {
 				  if (err) return console.error(err);
-				  console.log('user created: ' + user);
-				  res.status('201').json(user);
+
+				  // send email
+				  // setup e-mail data with unicode symbols 
+					var confirmMailOptions = {
+					    from: 'Beauty Hunt <no-reply@beautyhunt.com>', 
+					    to: 'montylennie@gmail.com', 
+					    subject: 'Please confirm your account', 
+					    text: 'please confirm your account',  
+					    template: 'user_confirm',
+					    context: {
+			          username: user.username,
+			          confirmLink: "<<link to confirm account>>"
+				     }
+					};
+
+					// send mail with defined transport object 
+					transporter.sendMail(confirmMailOptions, function(error, info){
+					    if(error){
+					        console.log(error);
+					        transporter.close();
+					        res.status('404');
+					    }else{
+				        console.log('Message sent: ' + info.response);
+				        transporter.close();
+				        //send response to user
+							  console.log('user created: ' + user);
+							  res.status('201').json(user);
+					    }
+					});
 				});
 	    });
 		});

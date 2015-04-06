@@ -50,6 +50,7 @@ export default Ember.Controller.extend({
         //set new attributes
         user.setProperties({
           email: this.get('email'),
+          username: this.get('username'),
           password: this.get('password'),
           passwordConfirmation: this.get('passwordConfirmation')
         });
