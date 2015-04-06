@@ -8,11 +8,6 @@ RUN apt-get update && apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup | bash -
 RUN sudo apt-get install -y nodejs git
 
-#get nvm to control node versions
-RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
-RUN source ~/.bashrc
-RUN nvm install 0.12
-
 #get ember, bower and phantomjs
 RUN npm install -g ember-cli@0.2.2 bower@1.4.1 phantomjs@1.9.8
 
@@ -21,6 +16,11 @@ EXPOSE 4200 35729
 
 #change working directory
 WORKDIR /webapp/Users/montylennie/Documents/beautyhunt/ember
+
+#get nvm to control node versions
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
+RUN #!/bin/bash source ~/.bashrc 
+RUN #!/bin/bash nvm install 0.12
 
 #start app as default command
 CMD ["ember", "serve", "--watcher", "polling"]

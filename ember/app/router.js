@@ -6,4 +6,13 @@ var Router = Ember.Router.extend({
 });
 
 export default Router.map(function() {
+	this.resource('users', function() {
+		this.route('login');
+	  this.route('register');
+	  this.route('new-password');
+	  this.route('edit-password');
+	  this.route('resend-confirmation');
+    this.route('edit');
+    this.route('show');
+  });
 });

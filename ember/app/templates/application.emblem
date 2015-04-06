@@ -23,8 +23,10 @@
 								li
 									a{action 'invalidateSession'} Se déconnecter
 					else
-						li.nav-link register
-						li.nav-link login
+						li.nav-link 
+							= link-to "users.register" | Register
+						li.nav-link 
+							= link-to "index" | Login
 	if session.isAuthenticated
 		unless session.currentUser.isOwner
 			.visible-md-block.visible-lg-block

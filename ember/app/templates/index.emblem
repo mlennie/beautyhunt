@@ -2,7 +2,6 @@
 	br
 	br
 	br
-	br
 	.container
 		.row
 			h1.center Beauty Insider
@@ -17,9 +16,29 @@
 				.product-box
 					h4.center Accessories
 		.row
-			.col-sm-6.col-sm-offset-3
-				h5.center Hot products
+			.col-sm-4.col-sm-offset-4
+				h4.center Hot products
 				ul.list-group
 					li.list-group-item
+						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
 						span.badge 495
-						p Chanel Love Perfum
+						p Chanel Love Perfume
+					li.list-group-item
+						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
+						span.badge 361
+						p Dior Spring Jacket
+					li.list-group-item
+						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
+						span.badge 241
+						p H&M red hand bag
+					li.list-group-item
+						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
+						span.badge 215
+						p Forever 21 gold necklace
+					li.list-group-item
+						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
+						span.badge 187
+						p Urban outfitters quilt
+	br
+	br
+	br
