@@ -14,6 +14,13 @@ mongoose.connect('mongodb://' + IP + ':' + MONGOPORT + '/' + 'beauty-dev');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+//CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
@@ -41,7 +48,7 @@ db.once('open', function (callback) {
 	    	user.save(function (err, user) {
 				  if (err) return console.error(err);
 				  console.log('user created: ' + user);
-				  res.send('user created: ' + user);
+				  res.status('201').json(user);
 				});
 	    });
 		});
