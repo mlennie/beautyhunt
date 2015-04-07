@@ -42,7 +42,7 @@ router.get('/', function(req, res) {
 });
 
 // create user and send back all users after creation
-	router.post('/', function(req, res) {
+router.post('/', function(req, res) {
 
   //encrypt password
   var password = req.body.user.password;

@@ -7,7 +7,7 @@
 					span.icon-bar
 					span.icon-bar
 					span.icon-bar
-				h4 Beauty Hunt
+				h4 = link-to "index" | Beauty Hunt
 			.collapse.navbar-collapse#navbar-collapse-1
 				ul.nav.navbar-nav.navbar-right
 					if session.isAuthenticated
@@ -26,7 +26,7 @@
 						li.nav-link 
 							= link-to "users.register" | Register
 						li.nav-link 
-							= link-to "index" | Login
+							= link-to "users.login" | Login
 	if session.isAuthenticated
 		unless session.currentUser.isOwner
 			.visible-md-block.visible-lg-block
