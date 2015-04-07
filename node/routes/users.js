@@ -59,7 +59,13 @@ router.get('/', function(req, res) {
       })
 
       user.save(function (err, user) {
-        if (err) return console.error(err);
+        if (err) {
+        	res.status('404');
+        	return console.error(err);
+        }
+        //send response to user
+        console.log('user created: ' + user);
+        res.status('201').json(user);
 
         // send email
         // setup e-mail data with unicode symbols 
@@ -80,13 +86,9 @@ router.get('/', function(req, res) {
           if(error){
             console.log(error);
             transporter.close();
-            res.status('404');
           }else{
             console.log('Message sent: ' + info.response);
             transporter.close();
-            //send response to user
-            console.log('user created: ' + user);
-            res.status('201').json(user);
           }
         });
       });
