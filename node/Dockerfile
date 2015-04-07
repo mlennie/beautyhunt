@@ -17,5 +17,5 @@ WORKDIR /webapp/Users/montylennie/Documents/beautyhunt/node
 CMD ["supervisor", "index.js"]
 
 #start bash
-#docker run -i -t -p 8080:8080 --link mongo:MONGODB -v /:/webapp mlennie/beauty-node:v2 bash
+#docker run -i -t --rm -p 8080:8080 --link mongo:MONGODB -v /:/webapp mlennie/beauty-node:v2 bash
 #nodejs /opt/beautyapp/index.js

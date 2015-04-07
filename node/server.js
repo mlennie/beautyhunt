@@ -1,7 +1,8 @@
 var express = require('express'),
 		mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
-    database = require('./config/database');
+    database = require('./config/database'),
+    users = require('./routes/users');
 
 var app = express();
 
@@ -22,7 +23,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
 
-	require('./routes')(app);
+	app.use('/api/users', users);
+	app.get('*', function(req, res) {
+    res.send('Hello yoda!!');
+  });
  
 	app.listen(database.port);
 	console.log('Running on http://localhost:' + database.port);

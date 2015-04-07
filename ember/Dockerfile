@@ -26,7 +26,7 @@ RUN #!/bin/bash nvm install 0.12
 CMD ["ember", "serve", "--watcher", "polling"]
 
 #start app in interactive mode
-#docker run -rm -i -t -p 4200:4200 -p 35729:35729 -v /:/webapp mlennie/beauty-ember:v2 
+#docker run --rm -i -t -p 4200:4200 -p 35729:35729 -v /:/webapp mlennie/beauty-ember:v2 
 
 #start the server
 #ember serve --watcher polling
