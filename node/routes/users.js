@@ -2,10 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 // load the user model
-var User = require('../models/user'),
-    transporter = require('../config/email'),
-    bcrypt = require('bcryptjs');
-
+var User = require('../models/user');
 
 // api ---------------------------------------------------------------------
 
@@ -76,30 +73,9 @@ router.post('/', function(req, res) {
       console.log('user created: ' + user);
       res.status('201').json(user);
 
-      // send email
-      // setup e-mail data with unicode symbols 
-      var confirmMailOptions = {
-        from: 'Beauty Hunt <no-reply@beautyhunt.com>', 
-        to: 'montylennie@gmail.com', 
-        subject: 'Please confirm your account', 
-        text: 'please confirm your account',  
-        template: 'user_confirm',
-        context: {
-          username: user.username,
-          confirmLink: "<<link to confirm account>>"
-        }
-      };
+      //send confirmation email
+      user.sendConfirmationEmail(user.username);
 
-      // send mail with defined transport object 
-      transporter.sendMail(confirmMailOptions, function(error, info){
-        if(error){
-          console.log(error);
-          transporter.close();
-        }else{
-          console.log('Message sent: ' + info.response);
-          transporter.close();
-        }
-      });
     });
   });
 });

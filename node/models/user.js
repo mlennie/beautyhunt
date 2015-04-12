@@ -1,5 +1,6 @@
 // load mongoose since we need it to define a model
 var mongoose = require('mongoose'),
+		transporter = require('../config/email'),
 	  bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 
@@ -25,6 +26,31 @@ userSchema.statics.hashPassword = function(password, cb ) {
 
 userSchema.methods.checkPassword = function(password, hash) {
 	return bcrypt.compareSync(password, hash);
+};
+
+userSchema.methods.sendConfirmationEmail = function(username) {
+	// setup e-mail data with unicode symbols 
+  var confirmMailOptions = {
+    from: 'Beauty Hunt <no-reply@beautyhunt.com>', 
+    to: 'montylennie@gmail.com', 
+    subject: 'Please confirm your account', 
+    text: 'please confirm your account',  
+    template: 'user_confirm',
+    context: {
+      username: username,
+      confirmLink: "<<link to confirm account>>"
+    }
+  };
+
+  // send mail with defined transport object 
+  transporter.sendMail(confirmMailOptions, function(error, info){
+    if(error){
+      console.log(error);
+    } else {
+      console.log('Message sent: ' + info.response);
+    }
+    transporter.close();
+  });
 };
 
 //define model
