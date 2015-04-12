@@ -11,6 +11,18 @@ var userSchema = new Schema({
 });
 
 //methods
+userSchema.statics.hashPassword = function(password, cb ) {
+	bcrypt.genSalt(10, function(err, salt) {
+    
+    if (err) return cb(err);
+
+    bcrypt.hash(password, salt, function(err, hash) {
+      if (err) return cb(err);
+    	return cb(null, hash);
+    });
+  });
+};
+
 userSchema.methods.checkPassword = function(password, hash) {
 	return bcrypt.compareSync(password, hash);
 };
