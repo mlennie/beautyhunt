@@ -34,14 +34,24 @@ export default Ember.Controller.extend({
           identification: this.get('identification'), 
           password: this.get('password')
         }
+        
+      //successful login callback
       }).then(function(response){
+      	console.log(response["user"]["_id"]);
 
-      	//set token to local storage
-      	window.localStorage.setItem('token', response.token);
+      	//set session info to local storage
+      	var session = {
+      		user_token: response.token,
+      		user_id: response['user']['_id']
+      	}
+
+      	window.localStorage.setItem('session', JSON.stringify(session));
 
       	//transition to index
         controller.set('isLoading', false);
         controller.transitionToRoute('index', { queryParams: {loginSuccess: true}});
+
+      //unsuccessful login callback
       }, function(){
         //show authenticate error if authentication not good
 				controller.setProperties({
