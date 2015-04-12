@@ -2,7 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 // load the user model
-var User = require('../models/user');
+var User = require('../models/user'),
+    jwt = require('jwt-simple'),
+    moment = require('moment');
+
+var jwtSecret = 'xxx';
 
 // api ---------------------------------------------------------------------
 
@@ -42,9 +46,21 @@ router.post('/login', function(req, res) {
       return res.sendStatus(401);
     }
 
-    // User has authenticated OK
-    console.log('passwords matched!');
-    res.status('200').json(req.body);
+    //authentication successfull
+
+    //create token
+    var expires = moment().add(7, 'days').valueOf();
+    var token = jwt.encode({
+      iss: user.id,
+      exp: expires
+    }, jwtSecret);
+     
+    //send response
+    res.json({
+      token : token,
+      expires: expires,
+      user: user.toJSON()
+    });
   });
   
 });

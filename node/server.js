@@ -1,7 +1,6 @@
 var express = require('express'),
 		mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
-    jwt = require('jwt-simple'),
     database = require('./config/database'),
     users = require('./routes/users');
 
