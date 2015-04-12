@@ -1,4 +1,7 @@
-.container-fluid#login-page
+br
+br
+br
+.container-fluid#register-page
   .row
     if editSuccess
       .alert.alert-success Your password was succesfully reset.
@@ -17,22 +20,22 @@
       h1.center = fa-icon 'fa-spin fa-spinner'
     else
       .col-md-4.col-md-offset-4
-        h4.center Login
+        h1.center Login
         br
         form submit='authenticate'
           .input-group.full-width
             = input class='form-control' value=identification placeholder='Username' required=true
+          br
           .input-group.full-width
             = input class='form-control' value=password placeholder='Password' type='password' required=true
-          .small.black-link.margin-top-10= link-to 'new-password' | forgot password?
-          .small.black-link= link-to 'resend-confirmation' | Never received confirmation email?
+          .small.black-link.margin-top-10 forgot password?
+          .small.black-link Never received confirmation email?
           .small.padding-top-5.input-group
             = input type="checkbox" name="rememberMe"
             span.margin-left-10 Remember me
           br
-          button.btn.center.full-width type="submit" Login
+          button.btn.btn-primary.center.full-width type="submit" Login
           br
-          hr.black-line
           h6.center
             .black Not a member?
             .black-link = link-to 'users.register' | Sign up
