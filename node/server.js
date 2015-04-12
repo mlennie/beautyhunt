@@ -2,12 +2,14 @@ var express = require('express'),
 		mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     database = require('./config/database'),
-    users = require('./routes/users');
+    users = require('./routes/users'),
+    auth = require('./config/auth');
 
 var app = express();
 
 //CORS
 app.use(function(req, res, next) {
+  //console.log(req.headers);
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
   next();
@@ -16,12 +18,20 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// connect to mongoDB database on modulus.io
+app.use(function(req,res,next) {
+  //console.log(req.headers);
+  next();
+});
+
+//connect to mongoDB database on modulus.io
 mongoose.connect(database.url); 
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
+
+  //Authenticate user
+  app.all('/api/*', auth);
 
   app.use('/api/users', users);
 	app.get('*', function(req, res) { res.send('Hello yoda!!'); });
