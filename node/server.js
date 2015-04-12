@@ -1,11 +1,13 @@
 var express = require('express'),
 		mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
+    jwt = require('jwt-simple'),
     database = require('./config/database'),
-    users = require('./routes/users'),
-    sessions = require('./routes/sessions');
+    users = require('./routes/users');
 
 var app = express();
+
+app.set('jwtTokenSecret', 'YOUR_SECRET_STRING');
 
 //CORS
 app.use(function(req, res, next) {
@@ -25,7 +27,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
 
   app.use('/api/users', users);
-	app.use('/api/sessions', sessions);
 	app.get('*', function(req, res) { res.send('Hello yoda!!'); });
  
 	app.listen(database.port);
