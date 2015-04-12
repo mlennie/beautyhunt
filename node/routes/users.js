@@ -31,6 +31,15 @@ transporter.use('compile', nodemailerHandlebars(mailerOptions));
 
 
 // api ---------------------------------------------------------------------
+
+//delete all users
+router.get('/delete_all', function(req, res) {
+  User.remove({}, function(err) { 
+     console.log('users removed');
+     res.sendStatus(200);
+  });
+});
+
 // get all users
 router.get('/', function(req, res) {
 
@@ -44,8 +53,26 @@ router.get('/', function(req, res) {
 // log user in
 //check password and send back jwt token if 
 router.post('/login', function(req, res) {
-  console.log(req.body);
-  res.status('200').json(req.body);
+
+  User.findOne({username: req.body.identification}, function(err, user) {
+
+    if (err) { 
+      // user not found 
+      console.log('user not found');
+      return res.sendStatus(401);
+    }
+
+    if (!user.checkPassword(req.body.password, user.passwordHash)) {
+      console.log('passwords didnt match');
+      // incorrect password
+      return res.sendStatus(401);
+    }
+
+    // User has authenticated OK
+    console.log('passwords matched!');
+    res.status('200').json(req.body);
+  });
+  
 });
 
 // create user and send back all users after creation
