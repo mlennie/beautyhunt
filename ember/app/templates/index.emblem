@@ -3,6 +3,8 @@
 	br
 	br
 	.container
+		if loginSuccess
+			.alert.alert-success Congrats, you have successfully signed in. Have fun! 
 		.row
 			h1.center Beauty Insider
 		.row#product-boxes

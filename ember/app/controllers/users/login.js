@@ -34,7 +34,12 @@ export default Ember.Controller.extend({
           identification: this.get('identification'), 
           password: this.get('password')
         }
-      }).then(function(){
+      }).then(function(response){
+
+      	//set token to local storage
+      	window.localStorage.setItem('token', response.token);
+
+      	//transition to index
         controller.set('isLoading', false);
         controller.transitionToRoute('index', { queryParams: {loginSuccess: true}});
       }, function(){

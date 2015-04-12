@@ -6,8 +6,6 @@ var express = require('express'),
 
 var app = express();
 
-app.set('jwtTokenSecret', 'YOUR_SECRET_STRING');
-
 //CORS
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
