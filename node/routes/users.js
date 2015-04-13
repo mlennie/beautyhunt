@@ -31,10 +31,9 @@ router.get('/', function(req, res) {
 // log user in
 //check password and send back jwt token if 
 router.post('/login', function(req, res) {
-  //console.log(req.headers);
 
   User.findOne({username: req.body.identification}, function(err, user) {
-
+    
     if (err) { 
       // user not found 
       console.log('user not found');

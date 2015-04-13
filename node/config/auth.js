@@ -4,36 +4,50 @@ var jwt = require('jwt-simple');
 var jwtSecret = 'xxx';
  
 module.exports = function(req, res, next) {
+
+	//check to see if headers has x-access-token
 	if (req.headers["x-access-token"]) {
 
-		//console.log(req.headers['x-access-token']);
-	  var token = (req.body && req.body.access_token) || 
+		//3 ways we could get access token
+	  /*(req.body && req.body.access_token) || 
 	  						(req.query && req.query.access_token) || 
-	  						req.headers["x-access-token"]["user_token"];
+	  						req.headers["x-access-token"];*/
+
+	  //parse token and user_id from headers						
 	  var session = req.headers["x-access-token"];
 	  parsed_session = JSON.parse(session);
 	  var token = parsed_session.user_token;
+	  var user_id = parsed_session.user_id;
 
+	  //check presence of token
 	  if (token) {
 		  try {
+		  	//decode jwt
 		    var decoded = jwt.decode(token, jwtSecret);
 		 
+		    //check expiration
 		    if (decoded.exp <= Date.now()) {
 				  res.end('Access token has expired', 400);
 				}
 
-				
+				//make sure id sent with session matches decoded id
+				if (user_id !== decoded.iss) {
+					res.sendStatus(401);
+				}
+
+				//find and add user to req object
 				User.findOne({ _id: decoded.iss }, function(err, user) {
 				  req.user = user;
+				  return next();
 				});
 		 
 		  } catch (err) {
 		    return next();
 		  }
 		} else {
-		  next();
+		  return next();
 		}
 	} else {
-		next();
+		return next();
 	}
 };

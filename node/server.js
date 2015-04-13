@@ -31,7 +31,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
 
   //Authenticate user
-  app.all('/api/*', auth);
+  app.use('/api/*', auth);
 
   app.use('/api/users', users);
 	app.get('*', function(req, res) { res.send('Hello yoda!!'); });

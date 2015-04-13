@@ -37,13 +37,12 @@ export default Ember.Controller.extend({
         
       //successful login callback
       }).then(function(response){
-      	console.log(response["user"]["_id"]);
 
       	//set session info to local storage
       	var session = {
       		user_token: response.token,
       		user_id: response['user']['_id']
-      	}
+      	};
 
       	window.localStorage.setItem('session', JSON.stringify(session));
 
