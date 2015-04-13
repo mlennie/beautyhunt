@@ -3,6 +3,7 @@ var router = express.Router();
 
 // load the user model
 var User = require('../models/user'),
+    Identity = require('../models/identity'),
     jwt = require('jwt-simple'),
     moment = require('moment');
 
@@ -33,7 +34,7 @@ router.get('/', function(req, res) {
 router.post('/login', function(req, res) {
 
   User.findOne({username: req.body.identification}, function(err, user) {
-    
+
     if (err) { 
       // user not found 
       console.log('user not found');
@@ -54,15 +55,27 @@ router.post('/login', function(req, res) {
       iss: user.id,
       exp: expires
     }, jwtSecret);
+
+    //create identity to save token
+    var identity = new Identity({ 
+      token: token,
+      user_id: user.id
+    })
+
+    identity.save(function (err, identity) {
+      if (err) {
+        res.status('404');
+        return console.error(err);
+      }
      
-    //send response
-    res.json({
-      token : token,
-      expires: expires,
-      user: user.toJSON()
+      //send response
+      res.json({
+        token : token,
+        expires: expires,
+        user: user.toJSON()
+      });
     });
   });
-  
 });
 
 // create user and send back all users after creation
@@ -71,7 +84,7 @@ router.post('/', function(req, res) {
   //hash password
   var password = req.body.user.password;
   User.hashPassword(password, function(err, hash) {
-    if (err) return console.error(err);
+    if (err) {res.end(err, 400);}
 
     //create user
     var user = new User({ 
