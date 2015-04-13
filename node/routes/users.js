@@ -41,7 +41,6 @@ router.get('/', function(req, res) {
 // log user in
 //check password and send back jwt token if 
 router.post('/login', function(req, res) {
-
   User.findOne({username: req.body.identification}, function(err, user) {
 
     if (err) { 

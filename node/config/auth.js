@@ -1,4 +1,5 @@
-var User = require('../models/user');
+var User = require('../models/user'),
+		Identity = require('../models/identity');
 var jwt = require('jwt-simple');
 
 var jwtSecret = 'xxx';
@@ -22,6 +23,7 @@ module.exports = function(req, res, next) {
 	  //check presence of token
 	  if (token) {
 		  try {
+
 		  	//decode jwt
 		    var decoded = jwt.decode(token, jwtSecret);
 		 
@@ -37,8 +39,25 @@ module.exports = function(req, res, next) {
 
 				//find and add user to req object
 				User.findOne({ _id: decoded.iss }, function(err, user) {
-				  req.user = user;
-				  return next();
+
+					if (err) return console.error(err);
+
+					//check user identities for token
+			  	Identity.find({ user_id: user.id })
+			  					.where('token').equals(token)
+			  					.exec(function (err, identities) {
+			  		
+			  		if (err) return console.error(err);
+	    			
+	    			if (identities.length = 0) {
+						  res.end('Access token has expired', 400);
+						}
+
+						//add user to req object and return 
+					  req.user = user;
+					  return next();
+
+					});
 				});
 		 
 		  } catch (err) {

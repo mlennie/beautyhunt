@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
       		user_id: response['user']['_id']
       	};
 
-      	window.localStorage.setItem('session', JSON.stringify(session));
+      	//window.localStorage.setItem('session', JSON.stringify(session));
 
       	//transition to index
         controller.set('isLoading', false);
