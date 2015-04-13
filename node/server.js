@@ -3,6 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     database = require('./config/database'),
     users = require('./routes/users'),
+    identities = require('./routes/identities'),
     auth = require('./config/auth');
 
 var app = express();
@@ -34,6 +35,7 @@ db.once('open', function (callback) {
   app.use('/api/*', auth);
 
   app.use('/api/users', users);
+  app.use('/api/identities', identities);
 	app.get('*', function(req, res) { res.send('Hello yoda!!'); });
  
 	app.listen(database.port);

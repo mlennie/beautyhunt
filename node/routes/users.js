@@ -19,6 +19,15 @@ router.get('/delete_all', function(req, res) {
   });
 });
 
+// get identities for specific user
+router.get('/:user_id/identities', function(req, res) {
+
+  Identity.find({ user_id: req.params.user_id }, function (err, identities) {
+    if (err) return console.error(err);
+    res.json(identities);
+  });
+});
+
 // get all users
 router.get('/', function(req, res) {
 
