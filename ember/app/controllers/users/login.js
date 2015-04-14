@@ -50,10 +50,12 @@ export default Ember.Controller.extend({
       	};
 
       	window.localStorage.setItem('session', JSON.stringify(session));
-
+      	
       	//transition to index
         controller.set('isLoading', false);
-        controller.transitionToRoute('index', { queryParams: {loginSuccess: true}});
+        
+        // send to index page and reload page
+	      window.location.href = ENV.APP.EMBER_URL + "?loginSuccess=true";
 
       //unsuccessful login callback
       }, function(){

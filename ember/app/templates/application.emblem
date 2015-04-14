@@ -21,7 +21,7 @@
 								li friend referral
 								li.divider
 								li
-									a{action 'invalidateSession'} Se déconnecter
+									a{action 'invalidateSession'} Logout
 					else
 						li.nav-link 
 							= link-to "users.register" | Register
