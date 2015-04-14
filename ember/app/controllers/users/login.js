@@ -19,6 +19,11 @@ export default Ember.Controller.extend({
 		authenticate: function() {
 
 			var controller = this;
+
+			if (window.localStorage.getItem('session')) {
+				controller.transitionToRoute('index', { queryParams: {alreadyLoggedIn: true}});
+			}
+
 			controller.setProperties({
 				confirmation_success: false,
 				confirmation_fail: false,

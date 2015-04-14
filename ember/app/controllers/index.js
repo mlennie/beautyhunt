@@ -2,8 +2,9 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
 	//queryParams
-	queryParams: ['loginSuccess'],
+	queryParams: ['loginSuccess','alreadyLoggedIn'],
 
 	//properties
-	loginSuccess: null
+	loginSuccess: null,
+	alreadyLoggedIn: null
 });

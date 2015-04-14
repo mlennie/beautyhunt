@@ -46,8 +46,8 @@ module.exports = function(req, res, next) {
 			  					.where('token').equals(token)
 			  					.exec(function (err, identities) {
 			  		
-			  		if (err) return console.error(err);
-	    			console.log(identities);
+			  		if (err) return res.status(401).send({ error: err });
+
 	    			if (identities.length == 0) {
 	    				res.status(401).send({ error: 'token not valid' });
 						} else {
