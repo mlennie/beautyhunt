@@ -8,7 +8,6 @@ module.exports = function(req, res, next) {
 
 	//check to see if headers has x-access-token
 	if (req.headers["x-access-token"]) {
-
 		//3 ways we could get access token
 	  /*(req.body && req.body.access_token) || 
 	  						(req.query && req.query.access_token) || 
@@ -29,12 +28,12 @@ module.exports = function(req, res, next) {
 		 
 		    //check expiration
 		    if (decoded.exp <= Date.now()) {
-				  res.end('Access token has expired', 400);
+				  res.status(401).send({ error: 'token expired' });
 				}
 
 				//make sure id sent with session matches decoded id
 				if (user_id !== decoded.iss) {
-					res.sendStatus(401);
+					res.status(401).send({ error: 'token not valid' });
 				}
 
 				//find and add user to req object
@@ -48,14 +47,14 @@ module.exports = function(req, res, next) {
 			  					.exec(function (err, identities) {
 			  		
 			  		if (err) return console.error(err);
-	    			
-	    			if (identities.length = 0) {
-						  res.end('Access token has expired', 400);
+	    			console.log(identities);
+	    			if (identities.length == 0) {
+	    				res.status(401).send({ error: 'token not valid' });
+						} else {
+							//add user to req object and return 
+						  req.user = user;
+						  return next();
 						}
-
-						//add user to req object and return 
-					  req.user = user;
-					  return next();
 
 					});
 				});
