@@ -19,12 +19,12 @@ export default Ember.Route.extend({
   		
 			return this.store.find("user", session.user_id).then(function(user) {
         var currentUser = {
-      		id: session.user_id,
-      		email: user.email
+        	username: user.get('username'),
+      		email: user.get('email')
       	};
 
       	window.localStorage.setItem(
-      		'session.currentUser', 
+      		'currentUser', 
       		JSON.stringify(currentUser)
       	);
       });
