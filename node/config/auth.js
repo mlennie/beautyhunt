@@ -8,6 +8,7 @@ module.exports = function(req, res, next) {
 
 	//check to see if headers has x-access-token
 	if (req.headers["x-access-token"]) {
+		
 		//3 ways we could get access token
 	  /*(req.body && req.body.access_token) || 
 	  						(req.query && req.query.access_token) || 
@@ -53,6 +54,7 @@ module.exports = function(req, res, next) {
 						} else {
 							//add user to req object and return 
 						  req.user = user;
+						  console.log(req.user);
 						  return next();
 						}
 

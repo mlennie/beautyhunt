@@ -28,6 +28,15 @@ router.get('/:user_id/identities', function(req, res) {
   });
 });
 
+// GET user show
+router.get('/:user_id', function(req, res) {
+  if (req.user) {
+    res.json({user: req.user});
+  } else {
+    res.status(404).send({ error: 'couldnt find user' });
+  }
+});
+
 // get all users
 router.get('/', function(req, res) {
 
