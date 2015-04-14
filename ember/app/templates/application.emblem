@@ -10,10 +10,10 @@
 				h4 = link-to "index" | Beauty Hunt
 			.collapse.navbar-collapse#navbar-collapse-1
 				ul.nav.navbar-nav.navbar-right
-					if session.isAuthenticated
+					if currentUser
 						li.dropdown
 							a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-expanded="false"
-								| Mon compte
+								| My Account
 								span.caret
 							ul.dropdown-menu#main-nav-dropdown role="menu"
 								li my euros
