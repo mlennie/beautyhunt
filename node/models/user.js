@@ -32,7 +32,7 @@ userSchema.methods.checkPassword = function(password, hash) {
 	return bcrypt.compareSync(password, hash);
 };
 
-userSchema.methods.sendConfirmationEmail = function(username) {
+userSchema.methods.sendConfirmationEmail = function(username, token) {
 	// setup e-mail data with unicode symbols 
   var confirmMailOptions = {
     from: 'Beauty Hunt <no-reply@beautyhunt.com>', 
@@ -42,7 +42,7 @@ userSchema.methods.sendConfirmationEmail = function(username) {
     template: 'user_confirm',
     context: {
       username: username,
-      confirmLink: "<<link to confirm account>>"
+      confirmLink: "http://192.168.10.10:8080/api/users/confirm/" + token
     }
   };
 

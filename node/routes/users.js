@@ -19,6 +19,45 @@ router.get('/delete_all', function(req, res) {
   });
 });
 
+//delete all users
+router.get('/confirm/:token', function(req, res) {
+
+  var token = req.params["token"];
+
+  //decode jwt
+  var decoded = jwt.decode(token, jwtSecret);
+
+  //check expiration
+  if (decoded.exp <= Date.now()) {
+    res.status(401).send({ error: 'token expired' });
+  }
+
+  //get user id from decoded token
+  var user_id = decoded.iss;
+
+  //find user and confirm if havn't been confirmed yet
+  User.findOne({ _id: user_id }, function(err, user) {
+    
+    if (err) return console.error(err);
+
+    //send back error if can't find user
+    if (!user) {
+      res.location('http://192.168.10.10:4200/users/login?confirmation_fail=true');    
+      res.end();
+    }
+
+    user.confirmed_at = new Date();
+    user.save(function (err, user) {
+      if (err) {
+        res.redirect('http://192.168.10.10:4200/users/login?confirmation_fail=true');
+        return console.error(err);
+      }
+      console.log('here');
+      res.redirect('http://192.168.10.10:4200/users/login?confirmation_success=true');
+    });
+  });
+});
+
 // get identities for specific user
 router.get('/:user_id/identities', function(req, res) {
 
@@ -102,23 +141,18 @@ router.post('/logout', function(req, res) {
     var session = req.headers["x-access-token"];
     parsed_session = JSON.parse(session);
     var token = parsed_session.user_token;
-    var user_id = parsed_session.user_id;
 
     //check user identities for token
     var identity = Identity.find({ user_id: req.user.id })
             .where('token').equals(token);
             console.log(identity);
-            identity.remove( function(err) {
-              
-              if (err) return res.status(401).send({ error: err });
+    identity.remove( function(err) {
+      
+      if (err) return res.status(401).send({ error: err });
 
-              console.log('removal worked!');
-              res.end();
-            });
-
-    
-
-    res.json({user: req.user});
+      console.log('removal worked!');
+      res.end();
+    });
   } else {
     res.status(404).send({ error: 'couldnt find user' });
   }
@@ -165,7 +199,7 @@ router.post('/', function(req, res) {
         res.status('201').json(user);
 
         //send confirmation email
-        user.sendConfirmationEmail(user.username);
+        user.sendConfirmationEmail(user.username, token);
       });
     });
   });
