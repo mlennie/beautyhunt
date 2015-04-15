@@ -5,6 +5,8 @@
 	.container
 		if loginSuccess
 			.alert.alert-success Congrats, you have successfully signed in. Have fun! 
+		if logoutSuccess
+			.alert.alert-success You have been logged out. 
 		if alreadyLoggedIn
 			.alert.alert-danger You are already logged in!
 		.row

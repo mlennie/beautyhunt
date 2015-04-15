@@ -95,6 +95,35 @@ router.post('/login', function(req, res) {
   });
 });
 
+// Post user logout
+router.post('/logout', function(req, res) {
+  if (req.user) {
+    //parse token and user_id from headers            
+    var session = req.headers["x-access-token"];
+    parsed_session = JSON.parse(session);
+    var token = parsed_session.user_token;
+    var user_id = parsed_session.user_id;
+
+    //check user identities for token
+    var identity = Identity.find({ user_id: req.user.id })
+            .where('token').equals(token);
+            console.log(identity);
+            identity.remove( function(err) {
+              
+              if (err) return res.status(401).send({ error: err });
+
+              console.log('removal worked!');
+              res.end();
+            });
+
+    
+
+    res.json({user: req.user});
+  } else {
+    res.status(404).send({ error: 'couldnt find user' });
+  }
+});
+
 // create user and send back all users after creation
 router.post('/', function(req, res) {
 
