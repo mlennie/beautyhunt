@@ -8,7 +8,11 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
   username: String,
   email: String,
-  passwordHash: String
+  passwordHash: String,
+  confirmation_token: String,
+  confirmed_at: Date, 
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now }
 });
 
 //methods

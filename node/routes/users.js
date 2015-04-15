@@ -144,13 +144,29 @@ router.post('/', function(req, res) {
       	res.status('404');
       	return console.error(err);
       }
-      //send response to user
-      console.log('user created: ' + user);
-      res.status('201').json(user);
 
-      //send confirmation email
-      user.sendConfirmationEmail(user.username);
+      //create confirmation token
+      var expires = moment().add(7, 'days').valueOf();
+      var token = jwt.encode({
+        iss: user.id,
+        exp: expires
+      }, jwtSecret);
 
+      user.confirmation_token = token;
+
+      user.save(function (err, user) {
+        if (err) {
+          res.status('404');
+          return console.error(err);
+        }
+
+        //send response to user
+        console.log('user created: ' + user);
+        res.status('201').json(user);
+
+        //send confirmation email
+        user.sendConfirmationEmail(user.username);
+      });
     });
   });
 });
