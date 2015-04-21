@@ -21,7 +21,7 @@ WORKDIR /webapp/Users/montylennie/Documents/beautyhunt/ember
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
 RUN #!/bin/bash source ~/.bashrc 
 RUN #!/bin/bash nvm install 0.12
-RUN npm install
+#RUN npm install
 
 #start app as default command
 CMD ["ember", "serve", "--watcher", "polling", "--proxy", "http://192.168.10.10:8080"]

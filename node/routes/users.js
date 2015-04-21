@@ -19,7 +19,7 @@ router.get('/delete_all', function(req, res) {
   });
 });
 
-//delete all users
+//confirm user account from email
 router.get('/confirm/:token', function(req, res) {
 
   var token = req.params["token"];
@@ -42,8 +42,12 @@ router.get('/confirm/:token', function(req, res) {
 
     //send back error if can't find user
     if (!user) {
-      res.location('http://192.168.10.10:4200/users/login?confirmation_fail=true');    
-      res.end();
+      res.redirect('http://192.168.10.10:4200/users/login?confirmation_fail=true');    
+    }
+
+    //send back user if already confirmed
+    if (user.confirmed_at != null) {
+      res.redirect('http://192.168.10.10:4200/users/login?confirmation_fail=true');
     }
 
     user.confirmed_at = new Date();
@@ -52,7 +56,6 @@ router.get('/confirm/:token', function(req, res) {
         res.redirect('http://192.168.10.10:4200/users/login?confirmation_fail=true');
         return console.error(err);
       }
-      console.log('here');
       res.redirect('http://192.168.10.10:4200/users/login?confirmation_success=true');
     });
   });
