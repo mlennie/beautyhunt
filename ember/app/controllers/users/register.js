@@ -13,6 +13,7 @@ export default Ember.Controller.extend({
   password: null,
   passwordConfirmation: null,
   isLoading: false,
+  formErrors: null,
 
   //computed properties
   user: function(){
@@ -63,7 +64,11 @@ export default Ember.Controller.extend({
           _this.set('registrationSuccessful', true);
         };
 
-        var onFail = function() {
+        var onFail = function(response) {
+          if (response["responseJSON"]["error"]) {  
+            var error = response["responseJSON"]["error"];
+            _this.set('formError', error);
+          }
           _this.set('isLoading', false);
           _this.set('registrationFailed', true);
           _this.set('registrationSuccessful', false);

@@ -221,45 +221,68 @@ router.post('/logout', function(req, res) {
 // create user and send back all users after creation
 router.post('/', function(req, res) {
 
-  //hash password
-  var password = req.body.user.password;
-  User.hashPassword(password, function(err, hash) {
-    if (err) {res.end(err, 400);}
+  //make sure there are no other user's with that email or username
+  var email = req.body.user.email;
+  var username = req.body.user.username;
 
-    //create user
-    var user = new User({ 
-      username: req.body.user.username,
-      email: req.body.user.email,
-      passwordHash: hash 
-    })
+  User.findOne({email: email}, function(err, user) {
 
-    user.save(function (err, user) {
-      if (err) {
-      	res.status('404');
-      	return console.error(err);
+    if (user) {
+      return res.status(404).send({ 
+          error: "Email already in use. " + 
+          "Please choose another email." 
+        });
+    }
+
+    User.findOne({username: username}, function(err, user) {
+      if (user) {
+        return res.status(404).send({ 
+          error: "Username already in use. " + 
+          "Please choose another username." 
+        });
       }
 
-      //create confirmation token
-      var expires = moment().add(7, 'days').valueOf();
-      var token = jwt.encode({
-        iss: user.id,
-        exp: expires
-      }, jwtSecret);
+      //hash password
+      var password = req.body.user.password;
+      User.hashPassword(password, function(err, hash) {
+        if (err) {res.end(err, 400);}
 
-      user.confirmation_token = token;
+        //create user
+        var user = new User({ 
+          username: username,
+          email: email,
+          passwordHash: hash 
+        })
 
-      user.save(function (err, user) {
-        if (err) {
-          res.status('404');
-          return console.error(err);
-        }
+        user.save(function (err, user) {
+          if (err) {
+          	res.status('404');
+          	return console.error(err);
+          }
 
-        //send response to user
-        console.log('user created: ' + user);
-        res.status('201').json(user);
+          //create confirmation token
+          var expires = moment().add(7, 'days').valueOf();
+          var token = jwt.encode({
+            iss: user.id,
+            exp: expires
+          }, jwtSecret);
 
-        //send confirmation email
-        user.sendConfirmationEmail(user.username, token);
+          user.confirmation_token = token;
+
+          user.save(function (err, user) {
+            if (err) {
+              res.status('404');
+              return console.error(err);
+            }
+
+            //send response to user
+            console.log('user created: ' + user);
+            res.status('201').json(user);
+
+            //send confirmation email
+            user.sendConfirmationEmail(user.username, token);
+          });
+        });
       });
     });
   });
