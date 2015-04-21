@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
       var controller = this;
        // Custom ajax call for resending .                                                                             
       Ember.$.ajax({                                                                                                                                                                                       
-        url: ENV.APP.HOST + '/resend_confirmation',                                                               
+        url: ENV.APP.API_URL + '/api/users/resend_confirmation',                                                               
         type: 'GET',                                                                                                 
         data: {email: this.get('email') }                                                                                   
       }).then(function(){                                                                                     

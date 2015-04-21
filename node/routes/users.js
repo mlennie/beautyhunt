@@ -19,6 +19,59 @@ router.get('/delete_all', function(req, res) {
   });
 });
 
+//resend confirmation email
+router.get('/resend_confirmation', function(req, res) {
+  //get email
+  var email = req.query.email;
+
+  if (!email) {
+    res.status('404');
+    res.end("did not receive an email");
+    return
+  } 
+
+  User.findOne({email: email},function (err, user) {
+    if (err) {
+      res.status('404');
+      res.end(err);
+      return console.error(err);
+    }
+
+    if (!user) {
+      res.status('404').end("no user was found with that email");
+      return 
+    }
+
+    if (user.confirmed_at != undefined) {
+      res.status('404').end("user has already been confirmed");
+      return 
+    }
+
+    //create confirmation token
+    var expires = moment().add(7, 'days').valueOf();
+    var token = jwt.encode({
+      iss: user.id,
+      exp: expires
+    }, jwtSecret);
+
+    user.confirmation_token = token;
+
+    user.save(function (err, user) {
+      if (err) {
+        res.status('404');
+        return console.error(err);
+      }
+
+      //send response to user
+      console.log('user updated: ' + user);
+      res.status('200').end();
+
+      //send confirmation email
+      user.sendConfirmationEmail(user.username, token);
+    });
+  });
+});
+
 //confirm user account from email
 router.get('/confirm/:token', function(req, res) {
 
@@ -105,7 +158,7 @@ router.post('/login', function(req, res) {
       // incorrect password
       return res.sendStatus(401);
     }
-    console.log(user.confirmed_at);
+
     if (user.confirmed_at == undefined) {
       return res.status('404').end({errors: {'confirmation': "Not Confirmed"}});
     }
