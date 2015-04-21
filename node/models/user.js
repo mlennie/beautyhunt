@@ -57,6 +57,32 @@ userSchema.methods.sendConfirmationEmail = function(username, token) {
   });
 };
 
+userSchema.methods.sendPasswordEmail = function(username, token) {
+  // setup e-mail data with unicode symbols 
+  var confirmMailOptions = {
+    from: 'Beauty Hunt <no-reply@beautyhunt.com>', 
+    to: 'montylennie@gmail.com', 
+    subject: 'Password Reset Requested', 
+    text: 'you can reset your password here: ' + 
+          "http://192.168.10.10:4200/users/edit_password/?token=" + token,
+    template: 'edit_password',
+    context: {
+      username: username,
+      passwordResetLink: "http://192.168.10.10:4200/users/edit-password/?token=" + token
+    }
+  };
+
+  // send mail with defined transport object 
+  transporter.sendMail(confirmMailOptions, function(error, info){
+    if(error){
+      console.log(error);
+    } else {
+      console.log('Message sent: ' + info.response);
+    }
+    transporter.close();
+  });
+};
+
 //define model
 module.exports = mongoose.model('User', userSchema);
 

@@ -75,8 +75,42 @@ router.get('/resend_confirmation', function(req, res) {
 //send password update email
 router.get('/password_email', function(req, res) {
   var email = req.query.email;
-  console.log(email);
-  return res.end();
+  
+  if (!email) {
+    return res.status(401).end();
+  }
+
+  User.findOne({email: email}, function(err, user) {
+
+    if (err) {
+      return res.status(404).send(err);
+    }
+
+    if (!user) {
+      return res.status(401).send({ error: 'no user could be found with this email.' });
+    }
+
+    //create confirmation token
+    var expires = moment().add(7, 'days').valueOf();
+    var token = jwt.encode({
+      iss: user.id,
+      exp: expires
+    }, jwtSecret);
+
+    //give user a password reset token
+    user.password_reset_token = token;
+
+    user.save(function (err, user) {
+
+      if (err) {
+        return res.status(404).end(err);
+      }
+
+      res.end();
+      //send confirmation email
+      user.sendPasswordEmail(user.username, token);
+    });  
+  });
 });
 
 //confirm user account from email
@@ -89,7 +123,7 @@ router.get('/confirm/:token', function(req, res) {
 
   //check expiration
   if (decoded.exp <= Date.now()) {
-    res.status(401).send({ error: 'token expired' });
+    return res.status(401).send({ error: 'token expired' });
   }
 
   //get user id from decoded token
@@ -225,6 +259,16 @@ router.post('/logout', function(req, res) {
   }
 });
 
+//update password
+router.post('/update_password', function(req, res) {
+  
+  console.log(req.body);
+
+  var token = req.body.token;
+  var password = req.body.password;
+  var password_confirmation = req.body.password_confirmation;
+});
+
 // create user and send back all users after creation
 router.post('/', function(req, res) {
 
@@ -234,6 +278,8 @@ router.post('/', function(req, res) {
 
   User.findOne({email: email}, function(err, user) {
 
+    if (err) { res.status(404).send(err); }
+
     if (user) {
       return res.status(404).send({ 
           error: "Email already in use. " + 
@@ -242,6 +288,9 @@ router.post('/', function(req, res) {
     }
 
     User.findOne({username: username}, function(err, user) {
+      
+      if (err) { res.status(404).send(err); }
+
       if (user) {
         return res.status(404).send({ 
           error: "Username already in use. " + 
