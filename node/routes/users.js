@@ -72,6 +72,13 @@ router.get('/resend_confirmation', function(req, res) {
   });
 });
 
+//send password update email
+router.get('/password_email', function(req, res) {
+  var email = req.query.email;
+  console.log(email);
+  return res.end();
+});
+
 //confirm user account from email
 router.get('/confirm/:token', function(req, res) {
 

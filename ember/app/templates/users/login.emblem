@@ -28,7 +28,7 @@ br
 					br
 					.input-group.full-width
 						= input class='form-control' value=password placeholder='Password' type='password' required=true
-					.small.margin-top-10 forgot password?
+					.small.margin-top-10=link-to "users.new-password" | Forgot password?
 					.small=link-to "users.resend-confirmation" | Never received confirmation email?
 					.small.padding-top-5.input-group
 						= input type="checkbox" name="rememberMe"
