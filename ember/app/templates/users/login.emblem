@@ -2,40 +2,40 @@ br
 br
 br
 .container-fluid#register-page
-  .row
-    if editSuccess
-      .alert.alert-success Your password was succesfully reset.
-    if loginError
-      .alert.alert-danger 
-        strong Could not login:
-        ul
-          li Please make sure that the email and password are correct.
-          li 
-            | Did you confirm your account? If not you can resend a confirmation email here: resend link
-    if confirmation_success
-      .alert.alert-success Your account is now confirmed. You make now login.
-    if confirmation_fail
-      .alert.alert-danger Confirmation failed. Either you have already confirmed your account, or this user does not exist. 
-    if isLoading
-      h1.center = fa-icon 'fa-spin fa-spinner'
-    else
-      .col-md-4.col-md-offset-4
-        h1.center Login
-        br
-        form submit='authenticate'
-          .input-group.full-width
-            = input class='form-control' value=identification placeholder='Username' required=true
-          br
-          .input-group.full-width
-            = input class='form-control' value=password placeholder='Password' type='password' required=true
-          .small.black-link.margin-top-10 forgot password?
-          .small.black-link Never received confirmation email?
-          .small.padding-top-5.input-group
-            = input type="checkbox" name="rememberMe"
-            span.margin-left-10 Remember me
-          br
-          button.btn.btn-primary.center.full-width type="submit" Login
-          br
-          h6.center
-            .black Not a member?
-            .black-link = link-to 'users.register' | Sign up
+	.row
+		if editSuccess
+			.alert.alert-success Your password was succesfully reset.
+		if loginError
+			.alert.alert-danger 
+				strong Could not login:
+				ul
+					li Please make sure that the email and password are correct.
+					li 
+						| Did you confirm your account? If not you can resend a confirmation email here: resend link
+		if confirmation_success
+			.alert.alert-success Your account is now confirmed. You make now login.
+		if confirmation_fail
+			.alert.alert-danger Confirmation failed. Either you have already confirmed your account, or this user does not exist. 
+		if isLoading
+			h1.center = fa-icon 'fa-spin fa-spinner'
+		else
+			.col-md-4.col-md-offset-4
+				h1.center Login
+				br
+				form submit='authenticate'
+					.input-group.full-width
+						= input class='form-control' value=identification placeholder='Username' required=true
+					br
+					.input-group.full-width
+						= input class='form-control' value=password placeholder='Password' type='password' required=true
+					.small.margin-top-10 forgot password?
+					.small=link-to "users.resend-confirmation" | Never received confirmation email?
+					.small.padding-top-5.input-group
+						= input type="checkbox" name="rememberMe"
+						span.margin-left-10 Remember me
+					br
+					button.btn.btn-primary.center.full-width type="submit" Login
+					br
+					h6.center
+						div Not a member?
+						div=link-to "users.register" | Sign up

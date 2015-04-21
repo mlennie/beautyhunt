@@ -1,0 +1,21 @@
+br
+br
+br
+br
+.container-fluid
+	.row
+		.col-md-4.col-md-offset-4#register-form
+			if emailSuccess
+				.alert.alert-success You will now receive a new confirmation email!
+			if emailFailed
+				.alert.alert-danger Confirmation could not be sent. Either email does not exist or this email has already been confirmed. 
+			h3.center Resend Confirmation Email
+			p.center (Please check your spam too)
+			form submit='resendConfirmationEmail'
+				.input-group.full-width
+						= input class='form-control' value=email placeholder='Email' type='email' required=true
+				br
+				button.margin-top-10.btn.btn-success.center.full-width type="submit" Resend
+				br
+				br
+				.center = link-to "users.login" | back
