@@ -194,6 +194,10 @@ router.post('/login', function(req, res) {
       return res.sendStatus(401);
     }
 
+    if (!user) {
+      return res.status(404).send({ error: 'couldnt find user' });
+    }
+
     if (!user.checkPassword(req.body.password, user.passwordHash)) {
       console.log('passwords didnt match');
       // incorrect password
@@ -261,12 +265,56 @@ router.post('/logout', function(req, res) {
 
 //update password
 router.post('/update_password', function(req, res) {
-  
-  console.log(req.body);
 
-  var token = req.body.token;
+  var token = req.body.password_reset_token;
   var password = req.body.password;
   var password_confirmation = req.body.password_confirmation;
+
+  //decode jwt
+  var decoded = jwt.decode(token, jwtSecret);
+
+  //check expiration
+  if (decoded.exp <= Date.now()) {
+    return res.status(401).send({ error: 'token expired' });
+  }
+
+  //get user id from decoded token
+  var user_id = decoded.iss;
+
+  //find user and confirm if havn't been confirmed yet
+  User.findOne({ _id: user_id }, function(err, user) {
+    
+    if (err) return res.status(401).send({ error: err });
+
+    //send back error if can't find user
+    if (!user) {
+      return res.status(401).send({ error: 'Your password token is no longer valid. ' + 
+                                           'Please restart password changing process' }); 
+    }
+
+    if (password !== password_confirmation) {
+      return res.status(401).send({ error: 'Password and Password ' + 
+                                           'Confirmation do not match' }); 
+    }
+
+    User.hashPassword(password, function(err, hash) {
+
+      if (err) {
+        return res.status(401).send({ error: err });
+      }
+
+      user.passwordHash = hash;
+
+      user.save(function (err, user) {
+
+        if (err) {
+          return res.status(401).send({ error: err });
+        }
+
+        return res.status(204).end();
+      });
+    });
+  });
 });
 
 // create user and send back all users after creation
@@ -317,7 +365,7 @@ router.post('/', function(req, res) {
           }
 
           //create confirmation token
-          var expires = moment().add(7, 'days').valueOf();
+          var expires = moment().add(1, 'hours').valueOf();
           var token = jwt.encode({
             iss: user.id,
             exp: expires

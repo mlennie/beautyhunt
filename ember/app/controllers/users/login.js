@@ -3,7 +3,8 @@ import ENV from "beauty-ember/config/environment";
 export default Ember.Controller.extend({
 
 	//queryParams
-	queryParams: ['confirmation_success','confirmation_fail', 'editSuccess'],
+	queryParams: ['confirmation_success','confirmation_fail', 
+								'editSuccess', 'password_change_success'],
 
 	//properties
 	identification: null,

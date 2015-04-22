@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
       }).then(function(){                                                                                     
         controller.set('editFailed', false);  
         controller.set('isLoading', false);
-        controller.transitionToRoute('login', { queryParams: {editSuccess: true}});                                                                                                                                           
+        controller.transitionToRoute('users.login', { queryParams: {editSuccess: true}});                                                                                                                                           
       }, function(){                                                                                                                                                                     
         controller.set('editFailed', true);     
         controller.set('isLoading', false);                                                                                    
