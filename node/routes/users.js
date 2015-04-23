@@ -31,11 +31,7 @@ router.get('/resend_confirmation', function(req, res) {
   } 
 
   User.findOne({email: email},function (err, user) {
-    if (err) {
-      res.status('404');
-      res.end(err);
-      return console.error(err);
-    }
+    if (err) return res.status(404).send(err);
 
     if (!user) {
       return res.status('404').end("no user was found with that email");
@@ -67,9 +63,7 @@ router.get('/password_email', function(req, res) {
 
   User.findOne({email: email}, function(err, user) {
 
-    if (err) {
-      return res.status(404).send(err);
-    }
+    if (err) return res.status(404).send(err);
 
     if (!user) {
       return res.status(401).send({ error: 'no user could be found with this email.' });
@@ -87,9 +81,7 @@ router.get('/password_email', function(req, res) {
 
     user.save(function (err, user) {
 
-      if (err) {
-        return res.status(404).end(err);
-      }
+      if (err) return res.status(404).send(err);
 
       res.end();
       //send confirmation email
@@ -209,10 +201,7 @@ router.post('/login', function(req, res) {
     })
 
     identity.save(function (err, identity) {
-      if (err) {
-        res.status('404');
-        return console.error(err);
-      }
+      if (err) return res.status(404).send(err);
      
       //send response
       res.json({
