@@ -51,7 +51,6 @@ router.get('/resend_confirmation', function(req, res) {
       if (err) return res.status(404).send(err);
       
       res.end();
-      debugger;
       //send confirmation email
       user.sendConfirmationEmail(user.username, user.confirmation_token);
     });
@@ -351,26 +350,13 @@ router.post('/', function(req, res) {
           }
 
           //create confirmation token
-          var expires = moment().add(1, 'hours').valueOf();
-          var token = jwt.encode({
-            iss: user.id,
-            exp: expires
-          }, jwtSecret);
-
-          user.confirmation_token = token;
-
-          user.save(function (err, user) {
-            if (err) {
-              res.status('404');
-              return console.error(err);
-            }
-
-            //send response to user
-            console.log('user created: ' + user);
+          user.addConfirmationToken(function(err,user) {
+            if (err) return res.status(404).send(err);
             res.status('201').json(user);
 
             //send confirmation email
-            user.sendConfirmationEmail(user.username, token);
+            user.sendConfirmationEmail(user.username, user.confirmation_token);
+            return
           });
         });
       });
