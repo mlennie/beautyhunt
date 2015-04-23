@@ -51,9 +51,9 @@ router.get('/resend_confirmation', function(req, res) {
       if (err) return res.status(404).send(err);
       
       res.end();
-
+      debugger;
       //send confirmation email
-      user.sendConfirmationEmail(user.username, user.token);
+      user.sendConfirmationEmail(user.username, user.confirmation_token);
     });
   });
 });
