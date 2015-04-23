@@ -1,8 +1,12 @@
 // load mongoose since we need it to define a model
 var mongoose = require('mongoose'),
 		transporter = require('../config/email'),
+    jwt = require('jwt-simple'),
+    moment = require('moment'),
 	  bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
+
+var jwtSecret = 'xxx';
 
 //define schema
 var userSchema = new Schema({
@@ -30,6 +34,25 @@ userSchema.statics.hashPassword = function(password, cb ) {
 
 userSchema.methods.checkPassword = function(password, hash) {
 	return bcrypt.compareSync(password, hash);
+};
+
+userSchema.methods.addConfirmationToken = function(cb) {
+
+  //make token
+  var expires = moment().add(7, 'days').valueOf();
+  var token = jwt.encode({
+    iss: this.id,
+    exp: expires
+  }, jwtSecret);
+
+  //add and save to user
+  this.confirmation_token = token;
+  this.save(function (err, user) {
+    
+    if (err) return cb(err);
+
+    return cb(null, user);
+  });
 };
 
 userSchema.methods.sendConfirmationEmail = function(username, token) {

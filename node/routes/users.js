@@ -38,36 +38,22 @@ router.get('/resend_confirmation', function(req, res) {
     }
 
     if (!user) {
-      res.status('404').end("no user was found with that email");
-      return 
+      return res.status('404').end("no user was found with that email");
     }
 
     if (user.confirmed_at != undefined) {
-      res.status('404').end("user has already been confirmed");
-      return 
+      return res.status('404').end("user has already been confirmed");
     }
 
     //create confirmation token
-    var expires = moment().add(7, 'days').valueOf();
-    var token = jwt.encode({
-      iss: user.id,
-      exp: expires
-    }, jwtSecret);
-
-    user.confirmation_token = token;
-
-    user.save(function (err, user) {
-      if (err) {
-        res.status('404');
-        return console.error(err);
-      }
-
-      //send response to user
-      console.log('user updated: ' + user);
-      res.status('200').end();
+    user.addConfirmationToken(function(err, user) {
+      
+      if (err) return res.status(404).send(err);
+      
+      res.end();
 
       //send confirmation email
-      user.sendConfirmationEmail(user.username, token);
+      user.sendConfirmationEmail(user.username, user.token);
     });
   });
 });
