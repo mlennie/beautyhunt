@@ -18,7 +18,9 @@ export default Ember.Route.extend({
         loginError: false,
         confirmation_success: false,
         confirmation_fail: false,
-        isLoading: false
+        isLoading: false,
+        password: null,
+        identification: null
       });
     }
   }

@@ -8,7 +8,12 @@ export default Ember.Route.extend({
     	registrationFailed: false,
     	passwordMismatch: false,
     	passwordTooShort: false,
-      isLoading: false
+      isLoading: false,
+      username: null,
+      email: null,
+      password: null,
+      passwordConfirmation: null,
+      formErrors: null
     });
   }
 });

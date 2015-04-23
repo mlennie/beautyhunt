@@ -7,7 +7,9 @@ export default Ember.Route.extend({
       // isExiting would be false if only the route's model was changing
       //reset messages
       controller.setProperties({
-        loginSuccess: null
+        loginSuccess: null,
+        logoutSuccess: null,
+        alreadyLoggedIn: null
       });
     }
   }
