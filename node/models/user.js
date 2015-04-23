@@ -32,6 +32,29 @@ userSchema.statics.hashPassword = function(password, cb ) {
   });
 };
 
+userSchema.statics.checkUniqueness = function (email, username, cb) {
+
+  var _this = this;
+
+  this.findOne({email: email}, function(err, user) {
+    if (err) return cb(err);
+    if (user) {
+      return cb(null, "Email already in use. " + 
+          "Please choose another email." );
+    }
+    debugger;
+    _this.findOne({username: username}, function(err, user) {
+      if (err) return cb(err);
+      if (user) {
+        return cb(null, "Username already in use. " + 
+            "Please choose another username." );
+      }
+    });
+  });
+
+  return cb(null,null);
+};
+
 userSchema.methods.checkPassword = function(password, hash) {
 	return bcrypt.compareSync(password, hash);
 };

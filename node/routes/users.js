@@ -308,56 +308,34 @@ router.post('/', function(req, res) {
   //make sure there are no other user's with that email or username
   var email = req.body.user.email;
   var username = req.body.user.username;
+  var password = req.body.user.password;
 
-  User.findOne({email: email}, function(err, user) {
+  //check uniqueness
+  User.checkUniqueness(email, username, function(err, message) {
+    if (err) return res.status(404).send(err);
+    if (message) return res.status(404).send({error: message});
 
-    if (err) { res.status(404).send(err); }
+    //hash password
+    User.hashPassword(password, function(err, hash) {
+      if (err) return res.status(404).send(err);
 
-    if (user) {
-      return res.status(404).send({ 
-          error: "Email already in use. " + 
-          "Please choose another email." 
-        });
-    }
+      //create user
+      var user = new User({ 
+        username: username,
+        email: email,
+        passwordHash: hash 
+      })
 
-    User.findOne({username: username}, function(err, user) {
-      
-      if (err) { res.status(404).send(err); }
+      user.save(function (err, user) {
+        if (err) return res.status(404).send(err);
 
-      if (user) {
-        return res.status(404).send({ 
-          error: "Username already in use. " + 
-          "Please choose another username." 
-        });
-      }
+        //create confirmation token
+        user.addConfirmationToken(function(err,user) {
+          if (err) return res.status(404).send(err);
+          res.status('201').json(user);
 
-      //hash password
-      var password = req.body.user.password;
-      User.hashPassword(password, function(err, hash) {
-        if (err) {res.end(err, 400);}
-
-        //create user
-        var user = new User({ 
-          username: username,
-          email: email,
-          passwordHash: hash 
-        })
-
-        user.save(function (err, user) {
-          if (err) {
-          	res.status('404');
-          	return console.error(err);
-          }
-
-          //create confirmation token
-          user.addConfirmationToken(function(err,user) {
-            if (err) return res.status(404).send(err);
-            res.status('201').json(user);
-
-            //send confirmation email
-            user.sendConfirmationEmail(user.username, user.confirmation_token);
-            return
-          });
+          //send confirmation email
+          user.sendConfirmationEmail(user.username, user.confirmation_token);
         });
       });
     });
