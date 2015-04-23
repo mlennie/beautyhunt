@@ -32,6 +32,22 @@ userSchema.statics.hashPassword = function(password, cb ) {
   });
 };
 
+//find user by username or password
+userSchema.statics.findByUsernameOrPassword = function(identification, cb) {
+  var _this = this;
+
+  this.findOne({email: identification}, function(err, user) {
+    if (err) return cb(err);
+    if (user) return cb(null, user);
+    
+    _this.findOne({username: identification}, function(err, user) {
+      if (err) return cb(err);
+      if (user) return cb(null, user);
+      return cb(null,null);
+    });
+  });
+};
+
 userSchema.statics.checkUniqueness = function (email, username, cb) {
 
   var _this = this;
@@ -42,17 +58,16 @@ userSchema.statics.checkUniqueness = function (email, username, cb) {
       return cb(null, "Email already in use. " + 
           "Please choose another email." );
     }
-    debugger;
+    
     _this.findOne({username: username}, function(err, user) {
       if (err) return cb(err);
       if (user) {
         return cb(null, "Username already in use. " + 
             "Please choose another username." );
       }
+      return cb(null,null);
     });
   });
-
-  return cb(null,null);
 };
 
 userSchema.methods.checkPassword = function(password, hash) {

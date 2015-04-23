@@ -24,7 +24,7 @@ br
 				br
 				form submit='authenticate'
 					.input-group.full-width
-						= input class='form-control' value=identification placeholder='Username' required=true
+						= input class='form-control' value=identification placeholder='Username or Email' required=true
 					br
 					.input-group.full-width
 						= input class='form-control' value=password placeholder='Password' type='password' required=true
