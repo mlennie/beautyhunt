@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import ENV from "beauty-ember/config/environment";
-export default Ember.Controller.extend({
+import AuthenticationMixin from '../../mixins/authentication';
+export default Ember.Controller.extend(AuthenticationMixin,{
 
 	//queryParams
 	queryParams: ['confirmation_success','confirmation_fail', 
@@ -17,6 +18,7 @@ export default Ember.Controller.extend({
 
 	//actions
 	actions: {
+
 		authenticate: function() {
 
 			var controller = this;
@@ -69,5 +71,22 @@ export default Ember.Controller.extend({
 				});
       });
 		}
+	},
+
+	//success callback used by authentication mixin
+	facebookSuccess: function(response) {
+		debugger;
+		alert('sucess!');
+	},
+
+	//fail callback used by authentication mixin
+	facebookFail: function() {
+		alert('fail');
 	}
 });
+
+
+
+
+
+

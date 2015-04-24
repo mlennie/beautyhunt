@@ -27,6 +27,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.APP.API_URL = 'http://192.168.10.10:8080'
     ENV.APP.EMBER_URL = 'http://192.168.10.10:4200'
+    ENV.APP.FACEBOOK_ID = '1424792561161658'
   }
 
   if (environment === 'test') {

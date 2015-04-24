@@ -45,6 +45,7 @@
 						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
 						span.badge 187
 						p Urban outfitters quilt
+				.fb-like data-share="true" data-width="450" data-show-faces="true"
 	br
 	br
 	br
