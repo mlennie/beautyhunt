@@ -30,21 +30,28 @@ export default Ember.Mixin.create({
 		  }
 
 		  function sendToServer(response) {
+		  	var _this = this;
+
 		  	// Custom ajax call for resending . 
 	      Ember.$.ajax({
 	        url: ENV.APP.API_URL + '/api/users/auth/facebook',
 	        type: 'POST',
 	        data: response
 
-	      }).then(facebookSuccess(response), facebookFail());
-		  }
+	      }).then(function(response) {
+	      	//set session info to local storage
+	      	var session = {
+	      		user_token: response.token,
+	      		user_id: response['user']['_id']
+	      	};
 
-		  function facebookSuccess (response) {
-				alert('sucess!');
-		  }
-
-		  function facebookFail () {
-		  	alert('fail');
+	      	window.localStorage.setItem('session', JSON.stringify(session));
+	        
+	        // send to index page and reload page
+		      window.location.href = ENV.APP.EMBER_URL + "?loginSuccess=true";
+	      }, function() {
+	      	alert('Connection through facebook did not work. Please try again soon.');
+	      });
 		  }
 		}
   }

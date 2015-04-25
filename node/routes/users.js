@@ -291,7 +291,7 @@ router.post('/auth/:provider', function(req, res) {
     if (!user) return re.status(404).send({ error: "did not find user"});
     if (!token) return re.status(404).send({ error: "did not find token"});
     //send response
-    res.json({
+    res.status(201).json({
       token : token,
       user: user.toJSON()
     });
