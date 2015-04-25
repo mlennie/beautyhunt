@@ -71,17 +71,6 @@ export default Ember.Controller.extend(AuthenticationMixin,{
 				});
       });
 		}
-	},
-
-	//success callback used by authentication mixin
-	facebookSuccess: function(response) {
-		debugger;
-		alert('sucess!');
-	},
-
-	//fail callback used by authentication mixin
-	facebookFail: function() {
-		alert('fail');
 	}
 });
 

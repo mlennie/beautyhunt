@@ -163,7 +163,7 @@ router.get('/', function(req, res) {
 // log user in
 //check password and send back jwt token if 
 router.post('/login', function(req, res) {
-  User.findByUsernameOrPassword(req.body.identification, function(err, user) {
+  User.findByIdentification(req.body.identification, function(err, user) {
     if (err) return res.status(404).send({ error: err });
 
     if (!user) {
@@ -183,26 +183,23 @@ router.post('/login', function(req, res) {
     //authentication successfull
 
     //create token
-    var expires = moment().add(7, 'days').valueOf();
-    var token = jwt.encode({
-      iss: user.id,
-      exp: expires
-    }, jwtSecret);
+    var time = [7, 'days'];
+    user.createToken(time, function(err, token) {
+      //create identity to save token
+      var identity = new Identity({ 
+        token: token,
+        user_id: user.id
+      })
 
-    //create identity to save token
-    var identity = new Identity({ 
-      token: token,
-      user_id: user.id
-    })
-
-    identity.save(function (err, identity) {
-      if (err) return res.status(404).send(err);
-     
-      //send response
-      res.json({
-        token : token,
-        expires: expires,
-        user: user.toJSON()
+      identity.save(function (err, identity) {
+        if (err) return res.status(404).send(err);
+       
+        //send response
+        res.json({
+          token : token,
+          expires: expires,
+          user: user.toJSON()
+        });
       });
     });
   });
@@ -282,6 +279,21 @@ router.post('/update_password', function(req, res) {
 
         return res.status(204).end();
       });
+    });
+  });
+});
+
+//connect with facebook (register and login) 
+router.post('/auth/:provider', function(req, res) {
+  User.connectWithProvider(req, function(err, user, token) {
+    
+    if (err) return res.status(404).send({ error: err});
+    if (!user) return re.status(404).send({ error: "did not find user"});
+    if (!token) return re.status(404).send({ error: "did not find token"});
+    //send response
+    res.json({
+      token : token,
+      user: user.toJSON()
     });
   });
 });

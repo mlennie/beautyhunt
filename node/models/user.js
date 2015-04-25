@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 		transporter = require('../config/email'),
     jwt = require('jwt-simple'),
     moment = require('moment'),
+    Identity = require('./identity'),
 	  bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 
@@ -12,6 +13,14 @@ var jwtSecret = 'xxx';
 var userSchema = new Schema({
   username: String,
   email: String,
+  facebook_id: String,
+  facebook_link: String,
+  name: String,
+  timezone: String,
+  locale: String,
+  first_name: String,
+  last_name: String,
+  gender: String,
   passwordHash: String,
   confirmation_token: String,
   confirmed_at: Date, 
@@ -20,6 +29,18 @@ var userSchema = new Schema({
 });
 
 //methods
+
+//create token for sessions
+userSchema.methods.createToken = function(time, cb) {
+  //eg time = [7, 'days']
+  var expires = moment().add(time[0], time[1]).valueOf();
+  var token = jwt.encode({
+    iss: this.id,
+    exp: expires
+  }, jwtSecret);
+  return cb(null, token);
+};
+
 userSchema.statics.hashPassword = function(password, cb ) {
 	bcrypt.genSalt(10, function(err, salt) {
     
@@ -32,21 +53,120 @@ userSchema.statics.hashPassword = function(password, cb ) {
   });
 };
 
-//find user by username or password
-userSchema.statics.findByUsernameOrPassword = function(identification, cb) {
-  var _this = this;
+//register user with facebook data
+userSchema.statics.registerWithFacebook = function(data, cb) {
+  
+  var user = new this({
+    email: data.email,
+    gender: data.gender,
+    name: data.name,
+    first_name: data.first_name,
+    last_name: data.last_name,
+    facebook_id: data.id,
+    timezone: data.timezone,
+    facebook_link: data.link,
+    locale: data.locale,
+    confirmed_at: new Date()
+  });
 
-  this.findOne({email: identification}, function(err, user) {
+  user.save(function(err, user) {
     if (err) return cb(err);
-    if (user) return cb(null, user);
-    
-    _this.findOne({username: identification}, function(err, user) {
-      if (err) return cb(err);
-      if (user) return cb(null, user);
-      return cb(null,null);
-    });
+    return cb(null, user);
   });
 };
+
+//register user with facebook data
+userSchema.statics.loginWithFacebook = function(data, cb) {
+  
+};
+
+//find user by username or password
+userSchema.statics.findByIdentification = function(identification, cb) {
+  var _this = this;
+
+  var identitiesArray = ["email", "username", "facebook_id"];
+
+  checkIdentity(identitiesArray, 0, identification);
+
+  function checkIdentity(identitiesArray, i, identification) {
+
+    //get identity from array
+    var identity = identitiesArray[i];
+
+    //search for user 
+    _this.findOne({identity: identification}, function(err, user) {
+      
+      if (err) return cb(err);
+      if (user) return cb(null, user);
+
+      //if didn't find user, increase index and try again
+      i++
+      if (identitiesArray[i]) {
+        checkIdentity(identitiesArray, i, identification);
+      } else {
+        //return null null if didn't find a user
+        return cb(null, null);
+      }
+    });
+  }
+};
+
+userSchema.statics.connectWithProvider = function(req, cb) {
+  var _this = this;
+  var User = _this.model('User');
+  var provider = req.params.provider;
+  var data = req.body;
+
+  if (provider == 'facebook') {
+    User.findByIdentification(data.id, function(err, user) {
+      if (err) return cb(err);
+      if (!user) {
+        User.findByIdentification(data.email, function(err, user) {
+          if (err) return cb(err);
+          if (!user) {
+            //no user found. start registration process
+            User.registerWithFacebook(data, function(err, user) {
+              if (err) return cb(err);
+              if (!user) return cb({error: "could not save user"});
+              //start login process
+              //create token
+              var time = [7, 'days'];
+              user.createToken(time, function(err, token) {
+                Identity.createIdentity(token, user.id, function(err, identity) {
+                  if (err) return cb(err);
+                  return cb(null, user, token);
+                });
+              });
+            });
+          } else {
+            //user found start login process
+            console.log('user found with email');
+            //create token
+            var time = [7, 'days'];
+            user.createToken(time, function(err, token) {
+              Identity.createIdentity(token, user.id, function(err, identity) {
+                if (err) return cb(err);
+                return cb(null, user, token);
+              });
+            });
+          }
+        });
+      } else {
+        //user found start login process
+        console.log('user found with facebook_id');
+        //create token
+        var time = [7, 'days'];
+        user.createToken(time, function(err, token) {
+          Identity.createIdentity(token, user.id, function(err, identity) {
+            if (err) return cb(err);
+            return cb(null, user, token);
+          });
+        });
+      }
+    });
+  }
+};
+
 
 userSchema.statics.checkUniqueness = function (email, username, cb) {
 

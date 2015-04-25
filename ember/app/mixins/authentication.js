@@ -12,17 +12,6 @@ export default Ember.Mixin.create({
 		    statusChangeCallback(response, "check");
 		  });
 
-		  function sendToServer(response) {
-		  	// Custom ajax call for resending . 
-	      Ember.$.ajax({
-	        url: ENV.APP.API_URL + '/api/users/auth/facebook',
-	        type: 'POST',
-	        data: response
-	        
-	      //successful login callback
-	      }).then(_this.send('facebookSuccess', response), _this.send('facebookFail'));
-		  }
-
 		  function statusChangeCallback(response, step) {
 
 		    if (response.status === 'connected') {
@@ -38,6 +27,24 @@ export default Ember.Mixin.create({
 			    	alert("you were not logged in");
 			    }
 		    }
+		  }
+
+		  function sendToServer(response) {
+		  	// Custom ajax call for resending . 
+	      Ember.$.ajax({
+	        url: ENV.APP.API_URL + '/api/users/auth/facebook',
+	        type: 'POST',
+	        data: response
+
+	      }).then(facebookSuccess(response), facebookFail());
+		  }
+
+		  function facebookSuccess (response) {
+				alert('sucess!');
+		  }
+
+		  function facebookFail () {
+		  	alert('fail');
 		  }
 		}
   }
