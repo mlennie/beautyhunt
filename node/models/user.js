@@ -11,10 +11,10 @@ var jwtSecret = 'xxx';
 
 //define schema
 var userSchema = new Schema({
-  username: String,
-  email: String,
-  facebook_id: String,
-  facebook_link: String,
+  username: { type: String, unique: true, sparse: true },
+  email: { type: String, unique: true, sparse: true },
+  facebook_id: { type: String, unique: true, sparse: true },
+  facebook_link: { type: String, unique: true, sparse: true },
   name: String,
   timezone: String,
   locale: String,
@@ -80,37 +80,6 @@ userSchema.statics.loginWithFacebook = function(data, cb) {
   
 };
 
-//find user by username or password
-userSchema.statics.findByIdentification = function(identification, cb) {
-  var _this = this;
-
-  var identitiesArray = ["email", "username", "facebook_id"];
-
-  checkIdentity(identitiesArray, 0, identification);
-
-  function checkIdentity(identitiesArray, i, identification) {
-
-    //get identity from array
-    var identity = identitiesArray[i];
-
-    //search for user 
-    _this.findOne({identity: identification}, function(err, user) {
-      
-      if (err) return cb(err);
-      if (user) return cb(null, user);
-
-      //if didn't find user, increase index and try again
-      i++
-      if (identitiesArray[i]) {
-        checkIdentity(identitiesArray, i, identification);
-      } else {
-        //return null null if didn't find a user
-        return cb(null, null);
-      }
-    });
-  }
-};
-
 userSchema.statics.connectWithProvider = function(req, cb) {
   var _this = this;
   var User = _this.model('User');
@@ -118,10 +87,10 @@ userSchema.statics.connectWithProvider = function(req, cb) {
   var data = req.body;
 
   if (provider == 'facebook') {
-    User.findByIdentification(data.id, function(err, user) {
+    this.findOne({email: data.email}, function(err, user) {
       if (err) return cb(err);
       if (!user) {
-        User.findByIdentification(data.email, function(err, user) {
+        _this.findOne({facebook_id: data.id}, function(err, user) {
           if (err) return cb(err);
           if (!user) {
             //no user found. start registration process

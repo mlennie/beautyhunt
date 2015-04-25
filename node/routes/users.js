@@ -163,45 +163,49 @@ router.get('/', function(req, res) {
 // log user in
 //check password and send back jwt token if 
 router.post('/login', function(req, res) {
-  User.findByIdentification(req.body.identification, function(err, user) {
+  User.findOne({email: req.body.identification}, function(err, user) {
     if (err) return res.status(404).send({ error: err });
-
     if (!user) {
-      return res.status(404).send({ error: 'couldnt find user' });
-    }
+      User.findOne({username: req.body.identification}, function(err, user) {
+        if (err) return res.status(404).send({ error: err });
 
-    if (!user.checkPassword(req.body.password, user.passwordHash)) {
-      console.log('passwords didnt match');
-      // incorrect password
-      return res.sendStatus(401);
-    }
+        if (!user) {
+          return res.status(404).send({ error: 'couldnt find user' });
+        }
 
-    if (user.confirmed_at == undefined) {
-      return res.status('404').end({errors: {'confirmation': "Not Confirmed"}});
-    }
+        if (!user.checkPassword(req.body.password, user.passwordHash)) {
+          console.log('passwords didnt match');
+          // incorrect password
+          return res.sendStatus(401);
+        }
 
-    //authentication successfull
+        if (user.confirmed_at == undefined) {
+          return res.status('404').end({errors: {'confirmation': "Not Confirmed"}});
+        }
 
-    //create token
-    var time = [7, 'days'];
-    user.createToken(time, function(err, token) {
-      //create identity to save token
-      var identity = new Identity({ 
-        token: token,
-        user_id: user.id
-      })
+        //authentication successfull
 
-      identity.save(function (err, identity) {
-        if (err) return res.status(404).send(err);
-       
-        //send response
-        res.json({
-          token : token,
-          expires: expires,
-          user: user.toJSON()
+        //create token
+        var time = [7, 'days'];
+        user.createToken(time, function(err, token) {
+          //create identity to save token
+          var identity = new Identity({ 
+            token: token,
+            user_id: user.id
+          })
+
+          identity.save(function (err, identity) {
+            if (err) return res.status(404).send(err);
+           
+            //send response
+            res.json({
+              token : token,
+              user: user.toJSON()
+            });
+          });
         });
       });
-    });
+    }
   });
 });
 
