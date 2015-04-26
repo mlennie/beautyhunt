@@ -156,7 +156,7 @@ router.get('/', function(req, res) {
   User.find(function (err, users) {
     if (err) return console.error(err);
     console.log(users);
-    res.json(users);
+    return res.json(users);
   });
 });
 

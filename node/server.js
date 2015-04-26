@@ -7,6 +7,7 @@ var express = require('express'),
     auth = require('./config/auth');
 
 var app = express();
+mongoose.set('debug', true);
 
 //CORS
 app.use(function(req, res, next) {

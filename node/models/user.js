@@ -41,6 +41,11 @@ userSchema.methods.createToken = function(time, cb) {
   return cb(null, token);
 };
 
+//update already created user with new facebook data
+userSchema.methods.updateWithFacebookData = function(cb) {
+  return cb(null, this);
+}
+
 userSchema.statics.hashPassword = function(password, cb ) {
 	bcrypt.genSalt(10, function(err, salt) {
     
@@ -76,8 +81,15 @@ userSchema.statics.registerWithFacebook = function(data, cb) {
 };
 
 //register user with facebook data
-userSchema.statics.loginWithFacebook = function(data, cb) {
-  
+userSchema.methods.createTokenAndIdentity = function(cb) {
+  var _this = this;
+  var time = [7, 'days'];
+  _this.createToken(time, function(err, token) {
+    Identity.createIdentity(token, _this.id, function(err, identity) {
+      if (err) return cb(err);
+      return cb(null, token);
+    });
+  });
 };
 
 userSchema.statics.connectWithProvider = function(req, cb) {
@@ -85,12 +97,17 @@ userSchema.statics.connectWithProvider = function(req, cb) {
   var User = _this.model('User');
   var provider = req.params.provider;
   var data = req.body;
+  //add logic for case where user might not give email, then cannot check 
+  //emails by null since there may be more than one users with blank emails
+  //same for facebook id
+  var facebookId = data.id == null ? "blank" : data.id;
+  var facebookEmail = data.email == null ? "blank" : data.email;
 
   if (provider == 'facebook') {
-    this.findOne({email: data.email}, function(err, user) {
+    this.findOne({facebook_id: facebookId}, function(err, user) {
       if (err) return cb(err);
       if (!user) {
-        _this.findOne({facebook_id: data.id}, function(err, user) {
+        _this.findOne({email: facebookEmail}, function(err, user) {
           if (err) return cb(err);
           if (!user) {
             //no user found. start registration process
@@ -98,22 +115,19 @@ userSchema.statics.connectWithProvider = function(req, cb) {
               if (err) return cb(err);
               if (!user) return cb({error: "could not save user"});
               //start login process
-              //create token
-              var time = [7, 'days'];
-              user.createToken(time, function(err, token) {
-                Identity.createIdentity(token, user.id, function(err, identity) {
-                  if (err) return cb(err);
-                  return cb(null, user, token);
-                });
+              //create token and Identity
+              user.createTokenAndIdentity(function(err, token) {
+                if (err) return cb(err);
+                return cb(null, user, token);
               });
             });
           } else {
             //user found start login process
             console.log('user found with email');
-            //create token
-            var time = [7, 'days'];
-            user.createToken(time, function(err, token) {
-              Identity.createIdentity(token, user.id, function(err, identity) {
+            //update user with new facebook info
+            user.updateWithFacebookData(data, function(err, user) {
+              //create token and Identity
+              user.createTokenAndIdentity(function(err, token) {
                 if (err) return cb(err);
                 return cb(null, user, token);
               });
@@ -123,13 +137,10 @@ userSchema.statics.connectWithProvider = function(req, cb) {
       } else {
         //user found start login process
         console.log('user found with facebook_id');
-        //create token
-        var time = [7, 'days'];
-        user.createToken(time, function(err, token) {
-          Identity.createIdentity(token, user.id, function(err, identity) {
-            if (err) return cb(err);
-            return cb(null, user, token);
-          });
+        //create token and Identity
+        user.createTokenAndIdentity(function(err, token) {
+          if (err) return cb(err);
+          return cb(null, user, token);
         });
       }
     });
