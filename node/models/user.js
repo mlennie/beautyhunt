@@ -42,8 +42,23 @@ userSchema.methods.createToken = function(time, cb) {
 };
 
 //update already created user with new facebook data
-userSchema.methods.updateWithFacebookData = function(cb) {
-  return cb(null, this);
+userSchema.methods.updateWithFacebookData = function(data, cb) {
+  var _this = this;
+  //update properties for user if they don't already have those properties
+  user.email = user.email == null ? data.email : user.email;
+  user.gender = user.gender == null ? data.gender : user.gender;
+  user.name = user.name == null ? data.name : user.name;
+  user.first_name = user.first_name == null ? data.first_name : user.first_name;
+  user.last_name = user.last_name == null ? data.last_name : user.last_name;
+  user.facebook_id = user.facebook_id == null ? data.id : user.facebook_id;
+  user.timezone = user.timezone == null ? data.id : user.timezone;
+  user.facebook_link = user.facebook_link == null ? data.link : user.facebook_link;
+  user.locale = user.locale == null ? data.locale : user.locale;
+
+  user.save(function(err, user) {
+    if (err) return cb(err);
+    return cb(null, user);
+  });
 }
 
 userSchema.statics.hashPassword = function(password, cb ) {
