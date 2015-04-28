@@ -19,15 +19,15 @@ WORKDIR /webapp/Users/montylennie/Documents/beautyhunt/ember
 
 #get nvm to control node versions
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | bash
-RUN #!/bin/bash source ~/.bashrc 
-RUN #!/bin/bash nvm install 0.12
-#RUN npm install
+Run /bin/sh -c source ~/.bashrc 
+Run /bin/sh -c nvm install 0.12 
+RUN npm install
 
 #start app as default command
 CMD ["ember", "serve", "--watcher", "polling", "--proxy", "http://192.168.10.10:8080"]
 
 #start app in interactive mode
-#docker run --rm -i -t -p 4200:4200 -p 35729:35729 -v /:/webapp mlennie/beauty-ember:v2 
+#docker run --rm -i -t -p 4200:4200 -p 35729:35729 -v /:/webapp mlennie/beauty-ember
 
 #start the server
 #ember serve --watcher polling --proxy http://192.168.10.10:8080

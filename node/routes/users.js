@@ -113,21 +113,21 @@ router.get('/confirm/:token', function(req, res) {
 
     //send back error if can't find user
     if (!user) {
-      res.redirect('http://192.168.10.10:4200/users/login?confirmation_fail=true');    
+      res.redirect(ENV.APP.EMBER_URL + '/users/login?confirmation_fail=true');    
     }
 
     //send back user if already confirmed
     if (user.confirmed_at != null) {
-      res.redirect('http://192.168.10.10:4200/users/login?confirmation_fail=true');
+      res.redirect(ENV.APP.EMBER_URL + '/users/login?confirmation_fail=true');
     }
 
     user.confirmed_at = new Date();
     user.save(function (err, user) {
       if (err) {
-        res.redirect('http://192.168.10.10:4200/users/login?confirmation_fail=true');
+        res.redirect(ENV.APP.EMBER_URL + '/users/login?confirmation_fail=true');
         return console.error(err);
       }
-      res.redirect('http://192.168.10.10:4200/users/login?confirmation_success=true');
+      res.redirect(ENV.APP.EMBER_URL + '/users/login?confirmation_success=true');
     });
   });
 });
