@@ -45,7 +45,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.APP.API_URL = 'http://46.101.147.71:8080'
     ENV.APP.EMBER_URL = 'http://46.101.147.71:4200'
-    ENV.APP.FACEBOOK_ID = '1424792561161658'
+    ENV.APP.FACEBOOK_ID = '1424790161161898'
   }
 
   return ENV;
