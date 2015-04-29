@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     jwt = require('jwt-simple'),
     moment = require('moment'),
     Identity = require('./identity'),
+    ENV = require('../config/environment'),
 	  bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 
@@ -219,7 +220,7 @@ userSchema.methods.sendConfirmationEmail = function(username, token) {
     template: 'user_confirm',
     context: {
       username: username,
-      confirmLink: "http://192.168.10.10:8080/api/users/confirm/" + token
+      confirmLink: ENV.APP.API_URL + "/api/users/confirm/" + token
     }
   };
 
@@ -241,11 +242,11 @@ userSchema.methods.sendPasswordEmail = function(username, token) {
     to: 'montylennie@gmail.com', 
     subject: 'Password Reset Requested', 
     text: 'you can reset your password here: ' + 
-          "http://192.168.10.10:4200/users/edit_password/?token=" + token,
+          ENV.APP.EMBER_URL + "/users/edit_password/?token=" + token,
     template: 'edit_password',
     context: {
       username: username,
-      passwordResetLink: "http://192.168.10.10:4200/users/edit-password/?token=" + token
+      passwordResetLink: ENV.APP.EMBER_URL + "/users/edit-password/?token=" + token
     }
   };
 

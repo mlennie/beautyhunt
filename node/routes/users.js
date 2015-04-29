@@ -5,6 +5,7 @@ var router = express.Router();
 var User = require('../models/user'),
     Identity = require('../models/identity'),
     jwt = require('jwt-simple'),
+    ENV = require('../config/environment'),
     moment = require('moment');
 
 var jwtSecret = 'xxx';

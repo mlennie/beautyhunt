@@ -31,3 +31,5 @@ CMD ["ember", "serve", "--watcher", "polling", "--proxy", "http://192.168.10.10:
 
 #start the server
 #ember serve --watcher polling --proxy http://192.168.10.10:8080
+#production
+#ember serve --watcher polling --proxy http://46.101.147.71:8080
