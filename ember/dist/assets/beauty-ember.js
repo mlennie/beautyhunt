@@ -3837,7 +3837,7 @@ catch(err) {
 if (runningTests) {
   require("beauty-ember/tests/test-helper");
 } else {
-  require("beauty-ember/app")["default"].create({"API_URL":"http://192.168.10.10:8080","EMBER_URL":"http://192.168.10.10:4200","FACEBOOK_ID":"1424792561161658","name":"beauty-ember","version":"0.0.0.15c48bf5"});
+  require("beauty-ember/app")["default"].create({"API_URL":"http://192.168.10.10:8080","EMBER_URL":"http://192.168.10.10:4200","FACEBOOK_ID":"1424792561161658","name":"beauty-ember","version":"0.0.0.fc8b364f"});
 }
 
 /* jshint ignore:end */
