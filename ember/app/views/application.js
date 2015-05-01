@@ -10,6 +10,10 @@ export default Ember.View.extend({
 	      xfbml      : true,
 	      version    : 'v2.3'
 	    });
+
+	    FB.getLoginStatus(function(response) {
+	    	window.localStorage.setItem('facebookStatus', response.status);
+		  });
 	  };
 
 	  (function(d, s, id){

@@ -1,27 +1,33 @@
 import Ember from "ember";
 import ENV from "beauty-ember/config/environment";
 export default Ember.Mixin.create({
+	//property
+	facebookStatus: null,
+	
 	//computed properties
+
   //actions
   actions: {
   	authenticateWithFacebook: function() {
 
 			var _this = this;
-			
-			FB.login(function(response) {
-		    statusChangeCallback(response, "check");
-		  }, {scope: 'public_profile,email'});
+			var facebookStatus = window.localStorage.getItem('facebookStatus');
 
-		  function statusChangeCallback(response, step) {
-
-		    if (response.status === 'connected') {
-		      FB.api('/me', function(response) {
-			    	sendToServer(response);
-					});
-		    } else {
-			    alert("you were not logged in");
-		    }
-		  }
+	    if (facebookStatus === 'connected') {
+	      FB.api('/me', function(response) {
+		    	sendToServer(response);
+				});
+	    } else {
+	    	FB.login(function(response) {
+	    		if (response.status === 'connected') {
+		    		FB.api('/me', function(response) {
+				    	sendToServer(response);
+						});
+					} else {
+						alert("you could not be logged in");
+					}
+		    }, {scope: 'public_profile,email'});
+	    }
 
 		  function sendToServer(response) {
 		  	var _this = this;
