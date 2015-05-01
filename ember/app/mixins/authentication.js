@@ -8,9 +8,9 @@ export default Ember.Mixin.create({
 
 			var _this = this;
 			
-			FB.getLoginStatus(function(response) {
+			FB.login(function(response) {
 		    statusChangeCallback(response, "check");
-		  });
+		  }, {scope: 'public_profile,email'});
 
 		  function statusChangeCallback(response, step) {
 
@@ -19,13 +19,7 @@ export default Ember.Mixin.create({
 			    	sendToServer(response);
 					});
 		    } else {
-		    	if (step === "check") {
-			    	FB.login(function(response) {
-			    		statusChangeCallback(response, "login");
-				    }, {scope: 'public_profile,email'});
-			    } else {
-			    	alert("you were not logged in");
-			    }
+			    alert("you were not logged in");
 		    }
 		  }
 
