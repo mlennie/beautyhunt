@@ -1,6 +1,6 @@
 import Ember from 'ember';
-
-export default Ember.Controller.extend({
+import AuthenticationMixin from '../../mixins/authentication';
+export default Ember.Controller.extend(AuthenticationMixin,{
   //queryParams
 
   //properties

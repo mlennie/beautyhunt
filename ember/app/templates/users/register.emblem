@@ -1,7 +1,7 @@
 br
 br
 br
-.container#register-page
+.container
 	.row
 		if registrationFailed
 			.alert.alert-danger 
@@ -24,6 +24,14 @@ br
 			unless registrationSuccessful
 				.col-md-4.col-md-offset-4
 					h1.center Sign Up
+					br
+					button#facebook-login.center.btn.btn-primary.full-width click='authenticateWithFacebook' 
+						= fa-icon 'fa-facebook' 
+						|  Register with Facebook
+					br
+					br
+					h4.center Or ...
+					br
 					form submit='registerUser'
 						.input-group.full-width
 							//label for="username" Username
