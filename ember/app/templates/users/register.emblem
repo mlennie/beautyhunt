@@ -22,7 +22,7 @@ br
 			h1.center = fa-icon 'fa-spin fa-spinner'
 		else
 			unless registrationSuccessful
-				.col-md-4.col-md-offset-4
+				.col-xs-10.col-xs-offset-1.col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
 					h1.center Sign Up
 					br
 					button#facebook-login.center.btn.btn-primary.full-width click='authenticateWithFacebook' 

@@ -1,7 +1,12 @@
 import Ember from 'ember';
 import ENV from "beauty-ember/config/environment";
 import SessionMixin from '../mixins/session';
-export default Ember.Controller.extend(SessionMixin, {
+import AuthenticationMixin from '../../mixins/authentication';
+export default Ember.Controller.extend(
+  //mixins
+  SessionMixin, 
+  AuthenticationMixin, {
+    
 	actions: {
 		invalidateSession: function() {
 			// Custom ajax call for resending . 

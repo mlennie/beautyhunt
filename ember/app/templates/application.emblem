@@ -16,9 +16,6 @@
 								| My Account
 								span.caret
 							ul.dropdown-menu#main-nav-dropdown role="menu"
-								li my euros
-								li my profile
-								li friend referral
 								li.divider
 								li
 									a{action 'invalidateSession'} Logout
@@ -27,6 +24,10 @@
 							= link-to "users.register" | Register
 						li.nav-link 
 							= link-to "users.login" | Login
+						.nav.navbar-nav.navbar-right#facebook-nav
+							button#facebook-login.center.btn.btn-primary.full-width.navbar-btn click='authenticateWithFacebook' 
+								= fa-icon 'fa-facebook' 
+								|  Connect with Facebook
 	if session.isAuthenticated
 		unless session.currentUser.isOwner
 			.visible-md-block.visible-lg-block
