@@ -1,12 +1,10 @@
 #index-page {
 	
-	#product-boxes {
-		margin-top: 30px;
+	.modal-header {
+		border-bottom: none;
+	}
 
-		.product-box {
-			border: 1px solid #000;
-			padding: 30px;
-			margin: 30px;
-		}
+	.modal-footer {
+		border-top: none;
 	}
 }
