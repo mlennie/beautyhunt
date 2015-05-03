@@ -10,11 +10,10 @@
 			.modal-body
 				form submit='createItem'
 					.input-group.full-width
-						= input class='form-control' value=title placeholder='Title: Please be specific' required=true
+						= input class='form-control' value=itemTitle placeholder='Title: Please be specific' required=true
 					br
 					.input-group.full-width
-						//label for="password" Password
-						= input class='form-control' value=url placeholder='Url: Please paste link to item here' type='url' required=true
+						= input class='form-control' value=itemUrl placeholder='Url: Please paste link to item here' type='url' required=true
 					br
 					.modal-footer
 						button.btn.inverse-purple-button type="button" data-dismiss="modal"

@@ -46,9 +46,10 @@ export default Ember.Mixin.create({
 	      	};
 
 	      	window.localStorage.setItem('session', JSON.stringify(session));
+	      	window.localStorage.setItem('login', true);
 	        
 	        // send to index page and reload page
-		      window.location.href = ENV.APP.EMBER_URL + "?loginSuccess=true";
+		      window.location.href = ENV.APP.EMBER_URL;
 	      }, function() {
 	      	alert('Connection through facebook did not work. Please try again soon.');
 	      });

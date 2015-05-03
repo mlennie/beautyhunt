@@ -53,12 +53,13 @@ export default Ember.Controller.extend(AuthenticationMixin,{
       	};
 
       	window.localStorage.setItem('session', JSON.stringify(session));
+      	window.localStorage.setItem('login', true);
       	
       	//transition to index
         controller.set('isLoading', false);
         
         // send to index page and reload page
-	      window.location.href = ENV.APP.EMBER_URL + "?loginSuccess=true";
+	      window.location.href = ENV.APP.EMBER_URL;
 
       //unsuccessful login callback
       }, function(){
