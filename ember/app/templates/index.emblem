@@ -4,19 +4,32 @@
 	br
 	.container
 		if loginSuccess
-			.alert.alert-success Congrats, you have successfully signed in. Have fun! 
+			.alert.alert-success.alert-dismissible 
+				button type="button" class="close" data-dismiss="alert" aria-label="Close"
+					span aria-hidden="true"
+						| x
+				| Congrats, you have successfully signed in. Have fun! 
 		if logoutSuccess
-			.alert.alert-success You have been logged out. 
+			.alert.alert-success.alert-dismissible 
+				button type="button" class="close" data-dismiss="alert" aria-label="Close"
+					span aria-hidden="true"
+						| x
+				| You have been logged out. 
 		if alreadyLoggedIn
-			.alert.alert-danger You are already logged in!
+			.alert.alert-danger.alert-dismissible 
+				button type="button" class="close" data-dismiss="alert" aria-label="Close"
+					span aria-hidden="true"
+						 | x
+				| You are already logged in!
 		br
 		.row
 			.col-sm-4.col-sm-offset-4 
 				unless currentUser
 					br
-				button.btn.invert-purple-button.center 
+				button.btn.inverse-purple-button.center data-toggle="modal" data-target="#newItem"
 					span.center = fa-icon 'plus'
 					span.center  Add Item
+				partial 'index-partials/new-item'
 		.row
 			.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1
 				br

@@ -52,14 +52,27 @@ hr.black-line { border-bottom: 1px solid #000; }
 .purple-button {
 	background-color: #5B4181;
 	color: #fff;
+
+  &:focus, &:hover {
+    color: #fff;
+  }
 }
 
-button.invert-purple-button {
+button.inverse-purple-button {
 	border: 1px solid #5B4181;
 	background-color: #fff;
 	color: #5B4181;
-	display: table;
-  margin: 0 auto;
+	
+  &.center {
+    display: table;
+    margin: 0 auto;
+  }
+
+  &:focus, &:hover {
+    color: #5B4181;
+  }
+
+
 }
 
 /* padding */

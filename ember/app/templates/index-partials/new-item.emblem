@@ -1,0 +1,15 @@
+.modal.fade#newItem tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+	.modal-dialog
+	  .modal-content
+	    .modal-header
+	      button type="button" class="close" data-dismiss="modal" aria-label="Close"
+	      	span aria-hidden="true"
+	      		| x
+	      h4.modal-title.purple
+	      	| Add Item
+	    .modal-body
+	    .modal-footer
+	      button.btn.inverse-purple-button type="button" data-dismiss="modal"
+	      	| Close
+	      button.btn.purple-button type="button"
+	      	| Save changes
