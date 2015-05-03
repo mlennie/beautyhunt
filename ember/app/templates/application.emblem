@@ -7,7 +7,7 @@
 					span.icon-bar
 					span.icon-bar
 					span.icon-bar
-				h4 = link-to "index" | Beauty Hunt
+				h3#logo = link-to "index" | Beauty Hunt
 			.collapse.navbar-collapse#navbar-collapse-1
 				ul.nav.navbar-nav.navbar-right
 					if currentUser
