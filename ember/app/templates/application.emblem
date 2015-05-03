@@ -1,5 +1,5 @@
 .container-fluid.fixed-nav
-	nav.navbar.navbar-inverse role="navigation"
+	nav.navbar role="navigation"
 		.container-fluid
 			.navbar-header
 				button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar-collapse-1"
@@ -7,7 +7,7 @@
 					span.icon-bar
 					span.icon-bar
 					span.icon-bar
-				h3#logo = link-to "index" | Beauty Hunt
+				h4#logo = link-to "index" | Beauty Insider
 			.collapse.navbar-collapse#navbar-collapse-1
 				ul.nav.navbar-nav.navbar-right
 					if currentUser

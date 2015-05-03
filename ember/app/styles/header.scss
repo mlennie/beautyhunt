@@ -3,14 +3,43 @@
   margin-bottom: 0;
   width: 100%;
   color: #fff;
+  background-color: #5B4181;
+
+  .navbar-toggle > span.icon-bar {
+    background-color: #fff;
+  }
+
+  #navbar-collapse-1 {
+    background-color: #5B4181;
+
+    li.dropdown {
+
+      a:focus, a:hover {
+        background-color: #5B4181;
+      }
+
+      a.dropdown-toggle {
+        color: #fff;
+      }
+    }
+
+    li.nav-link > a {
+      color: #fff;
+
+      &:focus, &:hover {
+        background-color: #5B4181;
+      }
+    }
+  }
 
   .nav-link {
-  	margin-right: 15px;
+  	margin-right: 10px;
   	margin-top: 10px;
   }
 
   #logo {
     margin-top: 20px;
+    margin-left: 10px;
 
     a {
       color: #fff;
@@ -43,4 +72,23 @@
 
 #facebook-nav {
   margin: 15px 10px;
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    #navbar-collapse-1 {
+      background-color: #fff;
+
+      li.dropdown {
+
+        a.dropdown-toggle {
+          color: #5B4181;
+        }
+      }
+
+      li.nav-link > a {
+        color: #5B4181;
+      }
+    }
+  }
 }

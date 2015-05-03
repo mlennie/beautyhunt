@@ -9,8 +9,6 @@
 			.alert.alert-success You have been logged out. 
 		if alreadyLoggedIn
 			.alert.alert-danger You are already logged in!
-		.row
-			h1.center Beauty Insider
 		.row#product-boxes
 			.col-sm-4
 				.product-box
