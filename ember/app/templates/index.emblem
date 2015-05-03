@@ -11,13 +11,16 @@
 			.alert.alert-danger You are already logged in!
 		br
 		.row
-			.col-sm-4.col-sm-offset-4
-				button.btn.invert-purple-button.center
+			.col-sm-4.col-sm-offset-4 
+				unless currentUser
+					br
+				button.btn.invert-purple-button.center 
 					span.center = fa-icon 'plus'
 					span.center  Add Item
-		br
 		.row
 			.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1
+				br
+				h4.purple Today
 				ul.list-group
 					li.list-group-item
 						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
@@ -39,7 +42,6 @@
 						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
 						span.badge 187
 						p Urban outfitters quilt
-				.fb-like data-share="true" data-width="450" data-show-faces="true"
 	br
 	br
 	br

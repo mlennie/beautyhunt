@@ -28,35 +28,9 @@
 							button#facebook-login.center.btn.btn-primary.full-width.navbar-btn click='authenticateWithFacebook' 
 								= fa-icon 'fa-facebook' 
 								|  Connect with Facebook
-	if session.isAuthenticated
-		unless session.currentUser.isOwner
-			.visible-md-block.visible-lg-block
-				nav.navbar.navbar-default#search-navbar role="navigation"
-					.container-fluid
-						form.navbar-form.navbar-left submit='search' role="search"
-							.form-group
-								span.search-field= view Ember.Select prompt="Arrondissment ou Restaurant" content=names valueBinding=name class="form-control"  
-								span#search-email.search-field= bootstrap-datepicker value=date class="form-control" format="dd/mm/yy" todayBtn=true todayHighlight=true placeholder="Date" language='fr'
-								span#calendar-icon= fa-icon 'calendar'
-								span.search-field= view Ember.Select content=hours class="form-control" 
-								span.search-field= view Ember.Select content=couverts class="form-control" 
-							button.btn.btn-success Rechercher
-						.visible-lg-block
-							p Rechercher ou réserver par téléphone: 09 90 90 87 85
 == outlet
-if showCookieMessage
-	.cookie.alert.alert-warning.full-width 
-		.row
-			.col-xs-1
-				h3.margin-left-10.pull-right info
-			.col-xs-9
-				strong Happy Dining Cookie Policy
-				p We use cookies to give you the best possible experience on our website. By continuing to browse this site, you give consent for cookies to be used. For more details, including how you can amend your preferences, please read our Cookie Policy.
-				br
-			.col-xs-1
-				button.pull-right click=closeAndAcceptCookies
-					h3.pull-right close
 
 footer.footer
 	.container
-		.row#contact-section
+		.row
+			.fb-like.margin-10 data-share="true" data-width="450" data-show-faces="true"
