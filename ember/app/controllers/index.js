@@ -18,14 +18,14 @@ export default Ember.Controller.extend(SessionMixin, {
 	actions: {
 
 		createItem: function() {
-
+			alert('in action');
 			//create item
 			var item = this.store.createRecord('item', {});
 
 			//add properties
 			item.setProperties({
-				title: itemTitle,
-				url: itemUrl
+				title: this.get('itemTitle'),
+				url: this.get('itemUrl')
 			});
 
 			//setup callbacks for after user request is sent
@@ -33,21 +33,15 @@ export default Ember.Controller.extend(SessionMixin, {
       var onSuccess = function(item){
         //reset properties
         _this.set('isLoading', false);
-        _this.set('itemCreationSuccessfull', false);
-        _this.set('registrationSuccessful', true);
+        _this.set('itemCreationFail', false);
+        _this.set('itemCreationSuccessfull', true);
       };
 
       var onFail = function(response) {
-        if (response["errors"]["code"] === 'bad') {
-          _this.set('codeBad', true);
-          _this.set('isLoading', false);
-          _this.set('registrationFailed', false);
-          _this.set('registrationSuccessful', false);
-        } else {
-          _this.set('isLoading', false);
-          _this.set('registrationFailed', true);
-          _this.set('registrationSuccessful', false);
-        }
+        //reset properties
+        _this.set('isLoading', false);
+        _this.set('itemCreationFail', true);
+        _this.set('itemCreationSuccessfull', false);
       };
 
 			//create item
