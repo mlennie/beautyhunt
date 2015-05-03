@@ -9,19 +9,15 @@
 			.alert.alert-success You have been logged out. 
 		if alreadyLoggedIn
 			.alert.alert-danger You are already logged in!
-		.row#product-boxes
-			.col-sm-4
-				.product-box
-					h4.center Beauty Products
-			.col-sm-4
-				.product-box
-					h4.center Fashion
-			.col-sm-4
-				.product-box
-					h4.center Accessories
+		br
 		.row
 			.col-sm-4.col-sm-offset-4
-				h4.center Hot products
+				button.btn.invert-purple-button.center
+					span.center = fa-icon 'plus'
+					span.center  Add Item
+		br
+		.row
+			.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1
 				ul.list-group
 					li.list-group-item
 						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
