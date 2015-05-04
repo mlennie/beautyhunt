@@ -3,11 +3,11 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     database = require('./config/database'),
     users = require('./routes/users'),
+    items = require('./routes/items'),
     identities = require('./routes/identities'),
     auth = require('./config/auth');
 
 var app = express();
-mongoose.set('debug', true);
 
 //CORS
 app.use(function(req, res, next) {
@@ -20,11 +20,6 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(function(req,res,next) {
-  //console.log(req.headers);
-  next();
-});
-
 //connect to mongoDB database on modulus.io
 mongoose.connect(database.url); 
 
@@ -36,6 +31,7 @@ db.once('open', function (callback) {
   app.use('/api/*', auth);
 
   app.use('/api/users', users);
+  app.use('/api/items', items);
   app.use('/api/identities', identities);
 	app.get('*', function(req, res) { res.send('Hello yoda!!'); });
  
