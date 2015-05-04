@@ -12,17 +12,21 @@ var router = express.Router();
 
 //GET
 
+//get items
+router.get('/', function(req, res) {
+	Item.getAll(req, function(err, items) {
+		if (err) return res.status(404).send(err);
+		return res.status(201).send({items: items});
+	});
+});
+
 //POST ----------------------------------------------------------------------
 
 //create item
 router.post('/', function(req, res) {
-
-	//call create item function
-	Item.createItem(req, function(err, data) {
-
+	Item.createItem(req, function(err, item) {
 		if (err) return res.status(404).send(err);
-
-		return res.status(201).send(data);
+		return res.status(200).send(item);
 	});
 
 });

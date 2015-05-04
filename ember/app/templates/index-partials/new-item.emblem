@@ -28,4 +28,4 @@
 						button.btn.inverse-purple-button type="button" data-dismiss="modal"
 							| Close
 						button.btn.purple-button type="submit"
-							| Save changes
+							| Add Item

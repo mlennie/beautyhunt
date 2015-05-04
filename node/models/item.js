@@ -16,6 +16,14 @@ var itemSchema = new Schema({
   updated_at: { type: Date, default: Date.now }
 });
 
+itemSchema.statics.getAll = function(req, cb) {
+  var _this = this;
+  this.find(function (err, items) {
+    if (err) return cb({error: err});
+    return cb(null, items);
+  });
+};
+
 itemSchema.statics.createItem = function(req, cb) {
   var _this = this;
 
