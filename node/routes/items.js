@@ -15,10 +15,9 @@ var router = express.Router();
 //POST ----------------------------------------------------------------------
 
 //create item
-
 router.post('/', function(req, res) {
 
-	//create item
+	//call create item function
 	Item.createItem(req, function(err, data) {
 
 		if (err) return res.status(404).send(err);

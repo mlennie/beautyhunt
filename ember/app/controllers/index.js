@@ -18,9 +18,11 @@ export default Ember.Controller.extend(SessionMixin, {
 	actions: {
 
 		createItem: function() {
-			alert('in action');
 			//create item
 			var item = this.store.createRecord('item', {});
+
+			//add loading spinner
+			this.set('isLoading', true);
 
 			//add properties
 			item.setProperties({
@@ -31,10 +33,15 @@ export default Ember.Controller.extend(SessionMixin, {
 			//setup callbacks for after user request is sent
       var _this = this;
       var onSuccess = function(item){
+      	//close model
+      	Ember.$('#newItem').modal('hide');
+
         //reset properties
         _this.set('isLoading', false);
         _this.set('itemCreationFail', false);
         _this.set('itemCreationSuccessfull', true);
+        //remove created message after a few seconds
+        setTimeout(function(){ _this.set('itemCreationSuccessfull', false);}, 3000);
       };
 
       var onFail = function(response) {

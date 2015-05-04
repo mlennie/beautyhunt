@@ -3,6 +3,11 @@
 	br
 	br
 	.container
+		if itemCreationSuccessfull
+			.row
+				.col-md-6.col-md-offset-3
+					.alert.alert-success
+						| Beauty item added!
 		if loginSuccess
 			.alert.alert-success.alert-dismissible 
 				button type="button" class="close" data-dismiss="alert" aria-label="Close"
