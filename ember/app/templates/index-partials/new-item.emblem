@@ -11,6 +11,12 @@
 				if isLoading
 					h2.center = fa-icon 'fa-spin fa-spinner'
 					br
+				if itemCreationFail
+					.alert.alert-danger.alert-dismissible 
+						button type="button" class="close" data-dismiss="alert" aria-label="Close"
+							span aria-hidden="true"
+								| x
+						= itemCreateFailMessage
 				form submit='createItem'
 					.input-group.full-width
 						= input class='form-control' value=itemTitle placeholder='Title: Please be specific' required=true

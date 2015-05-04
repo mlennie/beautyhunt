@@ -12,6 +12,7 @@ export default Ember.Controller.extend(SessionMixin, {
 	isLoading: null,
 	itemCreationSuccessfull: null,
 	itemCreationFail: null,
+	itemCreateFailMessage: "Oops looks like there was a problem. Couldn't create item.",
 	itemTitle: null,
 	itemUrl: null,
 
@@ -40,11 +41,23 @@ export default Ember.Controller.extend(SessionMixin, {
         _this.set('isLoading', false);
         _this.set('itemCreationFail', false);
         _this.set('itemCreationSuccessfull', true);
+        _this.set('itemTitle', null);
+        _this.set('itemUrl', null);
         //remove created message after a few seconds
         setTimeout(function(){ _this.set('itemCreationSuccessfull', false);}, 3000);
       };
 
       var onFail = function(response) {
+
+      	//handle errors
+      	if (response.responseJSON && response.responseJSON.errors) {
+      		var errors = response.responseJSON.errors;
+      		var errorName = Object.keys(errors)[0];
+      		var errorReason = errors[errorName];
+
+      		_this.set('itemCreateFailMessage', errorReason);
+      	}
+      	
         //reset properties
         _this.set('isLoading', false);
         _this.set('itemCreationFail', true);

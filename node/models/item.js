@@ -17,25 +17,45 @@ var itemSchema = new Schema({
 });
 
 itemSchema.statics.createItem = function(req, cb) {
+  var _this = this;
+
   //authenticate user
-  if (!req.user) return cb({error: "could not authenticate user"});
+  if (!req.user) return cb({errors: {noUser: "could not authenticate user"}});
 
   //get item attributes
   var title = req.body.item.title;
   var url = req.body.item.url;
   var user_id = req.user.id;
 
-  //build item
-  var item = new this({ 
-    title: title,
-    url: url,
-    user_id: user_id
-  })
-
-  //save and return item
-  item.save(function (err, item) {
+  //check uniqueness of title and url
+  _this.findOne({title: title}, function(err, item) {
     if (err) return cb({error: err});
-    return cb(null, item);
+    if (item) {
+      return cb({errors: { title: "Title has already been taken. " + 
+          "Please add a more specific title." }});
+    }
+
+    //check uniqueness of url
+    _this.findOne({url: url}, function(err, item) {
+      if (err) return cb({error: err});
+      if (item) {
+        return cb({errors: { url: "Url has already been taken. " + 
+            "Please add a more specific url." }});
+      }
+
+      //build item
+      var item = new _this({ 
+        title: title,
+        url: url,
+        user_id: user_id
+      })
+
+      //save and return item
+      item.save(function (err, item) {
+        if (err) return cb({error: err});
+        return cb(null, item);
+      });
+    });
   });
 };
 
