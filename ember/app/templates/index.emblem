@@ -8,6 +8,9 @@
 				.col-md-6.col-md-offset-3
 					.alert.alert-success
 						| Beauty item added!
+		if loginMessage
+			.alert.alert-success
+				| Please login or register first
 		if loginSuccess
 			.alert.alert-success.alert-dismissible 
 				button type="button" class="close" data-dismiss="alert" aria-label="Close"
@@ -29,11 +32,15 @@
 		br
 		.row
 			.col-sm-4.col-sm-offset-4 
-				unless currentUser
+				if currentUser
+					button.btn.inverse-purple-button.center data-toggle="modal" data-target="#newItem"
+						span.center = fa-icon 'plus'
+						span.center  Add Item
+				else
 					br
-				button.btn.inverse-purple-button.center data-toggle="modal" data-target="#newItem"
-					span.center = fa-icon 'plus'
-					span.center  Add Item
+					button.btn.inverse-purple-button.center click="showLoginMessage"
+						span.center = fa-icon 'plus'
+						span.center  Add Item
 				partial 'index-partials/new-item'
 		.row
 			.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1

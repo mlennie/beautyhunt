@@ -12,6 +12,7 @@ export default Ember.ArrayController.extend(SessionMixin, {
 	logoutSuccess: null,
 	alreadyLoggedIn: null,
 	isLoading: null,
+	loginMessage: null,
 	itemCreationSuccessfull: null,
 	itemCreationFail: null,
 	itemCreateFailMessage: "Oops looks like there was a problem. Couldn't create item.",
@@ -23,7 +24,15 @@ export default Ember.ArrayController.extend(SessionMixin, {
 
 	actions: {
 
+		showLoginMessage: function() {				
+			var _this = this;
+			_this.set('loginMessage', true);
+			setTimeout(function(){ _this.set('loginMessage', false);}, 3000);
+		},
+
 		createItem: function() {
+ 			var _this = this;
+
 			//create item
 			var item = this.store.createRecord('item', {});
 
@@ -37,7 +46,7 @@ export default Ember.ArrayController.extend(SessionMixin, {
 			});
 
 			//setup callbacks for after user request is sent
-      var _this = this;
+     
       var onSuccess = function(item){
       	//close model
       	Ember.$('#newItem').modal('hide');
