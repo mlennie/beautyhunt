@@ -28,7 +28,7 @@ itemSchema.statics.createItem = function(req, cb) {
   var _this = this;
 
   //authenticate user
-  if (!req.user) return cb({errors: {noUser: "could not authenticate user"}});
+  if (!req.user) return cb({errors: { noUser: "could not authenticate user" }});
 
   //get item attributes
   var title = req.body.item.title;

@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import SessionMixin from '../mixins/session';
-export default Ember.Controller.extend(SessionMixin, {
+export default Ember.ArrayController.extend(SessionMixin, {
+	sortProperties: ['created_at:desc'],
+  sortedItems: Ember.computed.sort('model', 'sortProperties'),
 
 	//queryParams
 	queryParams: ['alreadyLoggedIn', 'logoutSuccess'],
@@ -15,6 +17,9 @@ export default Ember.Controller.extend(SessionMixin, {
 	itemCreateFailMessage: "Oops looks like there was a problem. Couldn't create item.",
 	itemTitle: null,
 	itemUrl: null,
+
+	//computed properties
+
 
 	actions: {
 
@@ -65,7 +70,7 @@ export default Ember.Controller.extend(SessionMixin, {
       };
 
 			//create item
-      item.save().then(onSuccess,onFail);
+      item.save().then(onSuccess(item),onFail);
 		}
 	}
 });

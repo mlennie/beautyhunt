@@ -26,7 +26,7 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res) {
 	Item.createItem(req, function(err, item) {
 		if (err) return res.status(404).send(err);
-		return res.status(200).send(item);
+		return res.status(200).send({items: [item]});
 	});
 
 });

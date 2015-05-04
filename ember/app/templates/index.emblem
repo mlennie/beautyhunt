@@ -40,26 +40,12 @@
 				br
 				h4.purple Today
 				ul.list-group
-					li.list-group-item
-						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
-						span.badge 495
-						p Chanel Love Perfume
-					li.list-group-item
-						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
-						span.badge 361
-						p Dior Spring Jacket
-					li.list-group-item
-						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
-						span.badge 241
-						p H&M red hand bag
-					li.list-group-item
-						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
-						span.badge 215
-						p Forever 21 gold necklace
-					li.list-group-item
-						span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
-						span.badge 187
-						p Urban outfitters quilt
+					each item in sortedItems
+						li.list-group-item
+							span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
+							span.badge 495
+							p = item.title
+							a href={item.url} target="_blank" View website
 	br
 	br
 	br
