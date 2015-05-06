@@ -18,6 +18,10 @@ export default Ember.ArrayController.extend(SessionMixin, {
 	itemCreateFailMessage: "Oops looks like there was a problem. Couldn't create item.",
 	itemTitle: null,
 	itemUrl: null,
+	beautyProducts: null,
+	clothes: null,
+	shoes: null,
+	accessories: null,
 
 	//computed properties
 

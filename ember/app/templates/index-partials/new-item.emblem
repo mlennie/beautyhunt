@@ -24,6 +24,21 @@
 					.input-group.full-width
 						= input class='form-control' value=itemUrl placeholder='Url: Please paste link to item here' type='url' required=true
 					br
+					| Tags
+					br
+					.row
+						.col-sm-4
+							= input type="checkbox" checked=beautyProducts
+							span.margin-left-10 Beauty Products
+						.col-sm-3
+							= input type="checkbox" checked=clothes
+							span.margin-left-10.margin-right-20 Clothes
+						.col-sm-2
+							= input type="checkbox" checked=shoes
+							span.margin-left-10.margin-right-20 Shoes
+						.col-sm-3
+							= input type="checkbox" checked=accessories
+							span.margin-left-10.margin-right-20 Accessories
 					.modal-footer
 						button.btn.inverse-purple-button type="button" data-dismiss="modal"
 							| Close
