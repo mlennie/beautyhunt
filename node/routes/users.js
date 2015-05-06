@@ -179,9 +179,9 @@ router.post('/login', function(req, res) {
           // incorrect password
           return res.sendStatus(401);
         }
-
+        debugger;
         if (user.confirmed_at == undefined) {
-          return res.status('404').end({errors: {'confirmation': "Not Confirmed"}});
+          return res.status('401').send({errors: {'confirmation': "Not Confirmed"}});
         }
 
         //authentication successfull
