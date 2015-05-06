@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     database = require('./database'),
     moment = require('moment'),
     User = require('../models/user'),
+    Tag = require('../models/tag'),
     Item = require('../models/item');
 
 
@@ -14,7 +15,7 @@ db.once('open', function (callback) {
 
 	//USERS
 	//create user if doesn't exist
-	User.find({username: jimbo}, function(err, user) {
+	User.find({username: "jimbo"}, function(err, user) {
 		if (!user) {
 			//hash password
 		  User.hashPassword("password", function(err, hash) {
@@ -25,7 +26,7 @@ db.once('open', function (callback) {
 					email: "jimbobob@gmail.com",
 					passwordHash: hash,
 					confirmed_at: new Date
-				})
+				});
 
 				user.save(function (err, user) {
 					if (err) return console.log(err);
@@ -36,5 +37,20 @@ db.once('open', function (callback) {
 	});
 
 	//TAGS
-	
+	Tag.find({}, function(err, users) {
+
+		if (users.length == 0) {
+			//list tags
+			tags = ["beauty products", "clothes", "shoes", "accessories"];
+			//lopp through tags
+			for (var i=0; i < tags.length; i++) {
+				//build tag
+				var tag = new Tag({ name: tags[i] });
+				tag.save();
+			}
+			console.log("added tags");
+		}
+
+	});
+
 });

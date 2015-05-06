@@ -1,6 +1,6 @@
 // load mongoose since we need it to define a model
 var mongoose = require('mongoose'),
-		transporter = require('../config/email')
+		transporter = require('../config/email'),
     moment = require('moment'),
     User = require('./user'),
     ENV = require('../config/environment');
