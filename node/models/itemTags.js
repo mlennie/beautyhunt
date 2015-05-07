@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 		transporter = require('../config/email'),
     moment = require('moment'),
     User = require('./user'),
+    Tag = require('./tag'),
     Item = require('./item'),
     ENV = require('../config/environment');
 
@@ -18,29 +19,27 @@ var itemTagsSchema = new Schema({
 
 itemTagsSchema.statics.addTags = function(item, tags, cb) {
   var _this = this;
-  var tag;
-  var itemId = item.id;
 
   //use recursive pattern to create itemTags
 
   //array of created itemTags
-  var itemTags;
+  var itemTags = [];
 
   processTags(tags);
 
   function processTags(tags) {
-    var currentTag;
 
-    if tags.length == 0) {
+    if (tags.length == 0) {
       //All queries complete
       return cb(null, itemTags);
     }
 
     //get and remove last element of tags array
-    currentTag = tags.pop();
+    var currentTag = tags.pop();
 
     //find tag
-    Tag.find({title: currentTag}, function(err, tag) {
+    Tag.findOne({name: currentTag}, function(err, tag) {
+      
       if (err) console.log(err); 
       if (tag) {
 
@@ -52,6 +51,10 @@ itemTagsSchema.statics.addTags = function(item, tags, cb) {
 
         itemTag.save(function(err, itemTag) {
           if (err) console.log(err);
+
+          console.log(itemTag);
+
+          //push item tags to itemTags array
           itemTags.push(itemTag);
 
           //next round

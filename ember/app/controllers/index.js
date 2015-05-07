@@ -48,28 +48,6 @@ export default Ember.ArrayController.extend(SessionMixin, {
 			//add loading spinner
 			this.set('isLoading', true);
 
-			//create item
-			var item = this.store.createRecord('item', {
-				title: this.get('itemTitle'),
-				url: this.get('itemUrl')
-			});
-
-			//setup callbacks for after user request is sent
-     
-      var onSuccess = function(){
-      	//close model
-      	Ember.$('#newItem').modal('hide');
-
-        //reset properties
-        _this.set('isLoading', false);
-        _this.set('itemCreationFail', false);
-        _this.set('itemCreationSuccessfull', true);
-        _this.set('itemTitle', null);
-        _this.set('itemUrl', null);
-        //remove created message after a few seconds
-        setTimeout(function(){ _this.set('itemCreationSuccessfull', false);}, 3000);
-      };
-
       var onFail = function(response) {
 
       	//handle errors
@@ -93,13 +71,38 @@ export default Ember.ArrayController.extend(SessionMixin, {
         url: ENV.APP.API_URL + '/api/items',
         type: 'POST',
         data: {
-          title: this.get('itemTitle'), 
-          url: this.get('itemUrl'),
+          title: _this.get('itemTitle'), 
+          url: _this.get('itemUrl'),
           tags: tags
         }
         
       //callbacks
-      }).then(onSuccess, onFail);
+      }).then(function(response) {
+
+      	//get item from response
+      	var item = response.items[0];
+
+      	//close model
+      	Ember.$('#newItem').modal('hide');
+
+      	//push item to store
+				_this.store.push('item', {
+					title: _this.get('itemTitle'),
+					url: _this.get('itemUrl'),
+					id: item._id,
+					created_at: new Date
+				});
+
+        //reset properties
+        _this.set('isLoading', false);
+        _this.set('itemCreationFail', false);
+        _this.set('itemCreationSuccessfull', true);
+        _this.set('itemTitle', null);
+        _this.set('itemUrl', null);
+        //remove created message after a few seconds
+        setTimeout(function(){ _this.set('itemCreationSuccessfull', false);}, 3000);
+
+      }, onFail);
 		}
 	}
 });

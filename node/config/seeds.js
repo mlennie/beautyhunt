@@ -37,9 +37,9 @@ db.once('open', function (callback) {
 	});
 
 	//TAGS
-	Tag.find({}, function(err, users) {
+	Tag.find({}, function(err, results) {
 
-		if (users.length == 0) {
+		if (results.length == 0) {
 			//list tags
 			tags = ["beautyProducts", "clothes", "shoes", "accessories"];
 			//lopp through tags
