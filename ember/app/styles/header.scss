@@ -3,19 +3,19 @@
   margin-bottom: 0;
   width: 100%;
   color: #fff;
-  background-color: #5B4181;
+  background-color: #EA91EE;
 
   .navbar-toggle > span.icon-bar {
     background-color: #fff;
   }
 
   #navbar-collapse-1 {
-    background-color: #5B4181;
+    background-color: #EA91EE;
 
     li.dropdown {
 
       a:focus, a:hover {
-        background-color: #5B4181;
+        background-color: #EA91EE;
       }
 
       a.dropdown-toggle {
@@ -27,7 +27,7 @@
       color: #fff;
 
       &:focus, &:hover {
-        background-color: #5B4181;
+        background-color: #EA91EE;
       }
     }
   }
@@ -82,12 +82,12 @@
       li.dropdown {
 
         a.dropdown-toggle {
-          color: #5B4181;
+          color: #EA91EE;
         }
       }
 
       li.nav-link > a {
-        color: #5B4181;
+        color: #EA91EE;
       }
     }
   }

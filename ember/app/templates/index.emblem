@@ -51,15 +51,20 @@
 						li.list-group-item
 							.row
 								.col-sm-4
-									p = item.title
-									a href={item.url} target="_blank" View website
+									p
+										em.pink = item.title
+									a.purple.small href={item.url} target="_blank" 
+										| View website
+										span.margin-left-5 = fa-icon 'globe'
 								.col-sm-4
-									p.small Tags: 
+
+									p.small.green Tags: 
 									each tag in item.tags
-										span.small.margin-right-5 = tag.name
+										span.small.margin-right-5 
+											button.inverse-purple-button.rounded.small = tag
 								.col-sm-4
-									span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
-									span.badge.pull-right 495
+									span.margin-left-10.pull-right.pink = fa-icon 'caret-square-o-up'
+									span.badge.pull-right.pink-background 495
 	br
 	br
 	br
