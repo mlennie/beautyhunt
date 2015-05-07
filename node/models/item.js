@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 		transporter = require('../config/email'),
     moment = require('moment'),
     User = require('./user'),
+    ItemTags = require('./itemTags'),
     ENV = require('../config/environment');
 
 var Schema = mongoose.Schema;
@@ -31,9 +32,10 @@ itemSchema.statics.createItem = function(req, cb) {
   if (!req.user) return cb({errors: { noUser: "could not authenticate user" }});
 
   //get item attributes
-  var title = req.body.item.title;
-  var url = req.body.item.url;
-  var user_id = req.user.id;
+  var title = req.body.title;
+  var url = req.body.url;
+  var user_id = req.body.id;
+  var tags = req.body.tags;
 
   //check uniqueness of title and url
   _this.findOne({title: title}, function(err, item) {
@@ -61,7 +63,9 @@ itemSchema.statics.createItem = function(req, cb) {
       //save and return item
       item.save(function (err, item) {
         if (err) return cb({error: err});
-        return cb(null, item);
+        ItemTags.addTags(item, tags, function(err, itemTags) {
+          return cb(null, item, itemTags);
+        });
       });
     });
   });

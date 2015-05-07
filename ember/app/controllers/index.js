@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from "beauty-ember/config/environment";
 import SessionMixin from '../mixins/session';
 export default Ember.ArrayController.extend(SessionMixin, {
 	sortProperties: ['created_at:desc'],
@@ -37,21 +38,25 @@ export default Ember.ArrayController.extend(SessionMixin, {
 		createItem: function() {
  			var _this = this;
 
-			//create item
-			var item = this.store.createRecord('item', {});
+			//get tags
+			var tags = [];
+			if (this.get('beautyProducts')) {tags.push("beautyProducts")};
+			if (this.get('clothes')) {tags.push("clothes")};
+			if (this.get('shoes')) {tags.push("shoes")};
+			if (this.get('accessories')) {tags.push("accessories")};
 
 			//add loading spinner
 			this.set('isLoading', true);
 
-			//add properties
-			item.setProperties({
+			//create item
+			var item = this.store.createRecord('item', {
 				title: this.get('itemTitle'),
 				url: this.get('itemUrl')
 			});
 
 			//setup callbacks for after user request is sent
      
-      var onSuccess = function(item){
+      var onSuccess = function(){
       	//close model
       	Ember.$('#newItem').modal('hide');
 
@@ -83,7 +88,18 @@ export default Ember.ArrayController.extend(SessionMixin, {
       };
 
 			//create item
-      item.save().then(onSuccess(item),onFail);
+      // Custom ajax call for resending . 
+      Ember.$.ajax({
+        url: ENV.APP.API_URL + '/api/items',
+        type: 'POST',
+        data: {
+          title: this.get('itemTitle'), 
+          url: this.get('itemUrl'),
+          tags: tags
+        }
+        
+      //callbacks
+      }).then(onSuccess, onFail);
 		}
 	}
 });
