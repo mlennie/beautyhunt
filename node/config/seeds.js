@@ -41,7 +41,7 @@ db.once('open', function (callback) {
 
 		if (results.length == 0) {
 			//list tags
-			tags = ["beautyProducts", "clothes", "shoes", "accessories"];
+			tags = ["beauty products", "clothes", "shoes", "accessories"];
 			//lopp through tags
 			for (var i=0; i < tags.length; i++) {
 				//build tag

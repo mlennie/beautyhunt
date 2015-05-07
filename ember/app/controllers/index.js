@@ -40,7 +40,7 @@ export default Ember.ArrayController.extend(SessionMixin, {
 
 			//get tags
 			var tags = [];
-			if (this.get('beautyProducts')) {tags.push("beautyProducts")};
+			if (this.get('beautyProducts')) {tags.push("beauty products")};
 			if (this.get('clothes')) {tags.push("clothes")};
 			if (this.get('shoes')) {tags.push("shoes")};
 			if (this.get('accessories')) {tags.push("accessories")};
@@ -97,7 +97,7 @@ export default Ember.ArrayController.extend(SessionMixin, {
 				//push itemTags to store
 				itemTags[0].forEach(function(element, index) {
 
-					var itemTag = _this.store.push('item-tags', {
+					var itemTag = _this.store.push('item-tag', {
 						id: element._id,
 						item_id: element.item_id,
 						tag_id: element.tag_id,

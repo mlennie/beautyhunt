@@ -47,12 +47,19 @@
 				br
 				h4.purple Today
 				ul.list-group
-					each item in sortedItems
+					each item in sortedItems itemController="item"
 						li.list-group-item
-							span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
-							span.badge 495
-							p = item.title
-							a href={item.url} target="_blank" View website
+							.row
+								.col-sm-4
+									p = item.title
+									a href={item.url} target="_blank" View website
+								.col-sm-4
+									p.small Tags: 
+									each tag in item.tags
+										span.small.margin-right-5 = tag.name
+								.col-sm-4
+									span.margin-left-10.pull-right = fa-icon 'caret-square-o-up'
+									span.badge.pull-right 495
 	br
 	br
 	br
