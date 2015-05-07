@@ -81,6 +81,7 @@ export default Ember.ArrayController.extend(SessionMixin, {
 
       	//get item from response
       	var item = response.items[0];
+      	var itemTags = response.itemTags;
 
       	//close model
       	Ember.$('#newItem').modal('hide');
@@ -91,6 +92,18 @@ export default Ember.ArrayController.extend(SessionMixin, {
 					url: _this.get('itemUrl'),
 					id: item._id,
 					created_at: new Date
+				});
+
+				//push itemTags to store
+				itemTags[0].forEach(function(element, index) {
+
+					var itemTag = _this.store.push('item-tags', {
+						id: element._id,
+						item_id: element.item_id,
+						tag_id: element.tag_id,
+						created_at: new Date
+					});
+					console.log(itemTag);
 				});
 
         //reset properties
