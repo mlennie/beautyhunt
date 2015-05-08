@@ -1,8 +1,27 @@
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #91EED4;
+@mixin content($color-1, $color-2, $color-3) {
+	.footer {
+	  position: absolute;
+	  bottom: 0;
+	  width: 100%;
+	  /* Set the fixed height of the footer here */
+	  height: 60px;
+	  background-color: $color-3;
+	}
+}
+
+#main-container {
+  @include content(#000, #999, #91EED4);
+}
+
+//cupcake theme: 
+//color-1: pink, 
+//color-2: light purple, 
+//color-3: turqoise (greenish blue), 
+//color-4: light yellow
+#main-container.theme-1 {
+  @include content(#8C86F3, #EA91EE, #91EED4);
+}
+
+#main-container.theme-2 {
+  @include content(#666, #777, #91EED4);
 }

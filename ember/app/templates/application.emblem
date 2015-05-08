@@ -1,36 +1,37 @@
-.container-fluid.fixed-nav
-	nav.navbar role="navigation"
-		.container-fluid
-			.navbar-header
-				button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar-collapse-1"
-					span.sr-only Toggle navigation
-					span.icon-bar
-					span.icon-bar
-					span.icon-bar
-				h4#logo = link-to "index" | Beauty Insider
-			.collapse.navbar-collapse#navbar-collapse-1
-				ul.nav.navbar-nav.navbar-right
-					if currentUser
-						li.dropdown
-							a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-expanded="false"
-								| My Account
-								span.caret
-							ul.dropdown-menu#main-nav-dropdown role="menu"
-								li.divider
-								li
-									a{action 'invalidateSession'} Logout
-					else
-						li.nav-link 
-							= link-to "users.register" | Register
-						li.nav-link 
-							= link-to "users.login" | Login
-						.nav.navbar-nav.navbar-right#facebook-nav
-							button#facebook-login.center.btn.btn-primary.full-width.navbar-btn click='authenticateWithFacebook' 
-								= fa-icon 'fa-facebook' 
-								|  Connect with Facebook
-== outlet
+#main-container.theme-1
+	.container-fluid.fixed-nav
+		nav.navbar role="navigation"
+			.container-fluid
+				.navbar-header
+					button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar-collapse-1"
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					h4#logo = link-to "index" | Beauty Insider
+				.collapse.navbar-collapse#navbar-collapse-1
+					ul.nav.navbar-nav.navbar-right
+						if currentUser
+							li.dropdown
+								a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+									| My Account
+									span.caret
+								ul.dropdown-menu#main-nav-dropdown role="menu"
+									li.divider
+									li
+										a{action 'invalidateSession'} Logout
+						else
+							li.nav-link 
+								= link-to "users.register" | Register
+							li.nav-link 
+								= link-to "users.login" | Login
+							.nav.navbar-nav.navbar-right#facebook-nav
+								button#facebook-login.center.btn.btn-primary.full-width.navbar-btn click='authenticateWithFacebook' 
+									= fa-icon 'fa-facebook' 
+									|  Connect with Facebook
+	== outlet
 
-footer.footer
-	.container
-		.row
-			.fb-like.margin-10 data-share="true" data-width="450" data-show-faces="true"
+	footer.footer
+		.container
+			.row
+				.fb-like.margin-10 data-share="true" data-width="450" data-show-faces="true"

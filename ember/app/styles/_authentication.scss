@@ -1,9 +1,28 @@
-#facebook-login {
-	background-color: #4864B4;
-	margin: 0 auto;
-	text-align: center;
+@mixin content($color-1, $color-2, $color-3) {
+	#facebook-login {
+		background-color: #4864B4;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.nav > #facebook-login {
+		border: 1px solid #fff;
+	}
 }
 
-.nav > #facebook-login {
-	border: 1px solid #fff;
+#main-container {
+  @include content(#000, #999, #91EED4);
+}
+
+//cupcake theme: 
+//color-1: pink, 
+//color-2: light purple, 
+//color-3: turqoise (greenish blue), 
+//color-4: light yellow
+#main-container.theme-1 {
+  @include content(#8C86F3, #EA91EE, #91EED4);
+}
+
+#main-container.theme-2 {
+  @include content(#666, #777, #91EED4);
 }

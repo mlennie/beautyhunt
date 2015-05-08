@@ -1,94 +1,113 @@
-.navbar {
-  border-radius: 0px;
-  margin-bottom: 0;
-  width: 100%;
-  color: #fff;
-  background-color: #EA91EE;
-
-  .navbar-toggle > span.icon-bar {
-    background-color: #fff;
-  }
-
-  #navbar-collapse-1 {
-    background-color: #EA91EE;
-
-    li.dropdown {
-
-      a:focus, a:hover {
-        background-color: #EA91EE;
-      }
-
-      a.dropdown-toggle {
-        color: #fff;
-      }
-    }
-
-    li.nav-link > a {
-      color: #fff;
-
-      &:focus, &:hover {
-        background-color: #EA91EE;
-      }
-    }
-  }
-
-  .nav-link {
-  	margin-right: 10px;
-  	margin-top: 10px;
-  }
-
-  #logo {
-    margin-top: 20px;
-    margin-left: 10px;
-
-    a {
-      color: #fff;
-      
-      &:hover {
-        color: #fff;
-      }
-    }
-  }
-}
-
-#main-nav-dropdown {
-  z-index: 3;
-}
-
-#main-content {
-  margin-top: 70;
-}
-
-.center {
-  text-align: center;
-}
-
-.fixed-nav {
-  position: fixed;
-  width: 100%;
-  z-index: 3;
-  padding: 0;
-}
-
-#facebook-nav {
-  margin: 15px 10px;
-}
-
-@media (max-width: 767px) {
+@mixin content($color-1, $color-2, $color-3) {
   .navbar {
-    #navbar-collapse-1 {
+    border-radius: 0px;
+    margin-bottom: 0;
+    width: 100%;
+    color: #fff;
+    background-color: $color-2;
+
+    .navbar-toggle > span.icon-bar {
       background-color: #fff;
+    }
+
+    #navbar-collapse-1 {
+      background-color: #EA91EE;
 
       li.dropdown {
 
+        a:focus, a:hover {
+          background-color: #EA91EE;
+        }
+
         a.dropdown-toggle {
-          color: #EA91EE;
+          color: #fff;
         }
       }
 
       li.nav-link > a {
-        color: #EA91EE;
+        color: #fff;
+
+        &:focus, &:hover {
+          background-color: #EA91EE;
+        }
+      }
+    }
+
+    .nav-link {
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+
+    #logo {
+      margin-top: 20px;
+      margin-left: 10px;
+
+      a {
+        color: #fff;
+        
+        &:hover {
+          color: #fff;
+        }
       }
     }
   }
+
+  #main-nav-dropdown {
+    z-index: 3;
+  }
+
+  #main-content {
+    margin-top: 70;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .fixed-nav {
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+    padding: 0;
+  }
+
+  #facebook-nav {
+    margin: 15px 10px;
+  }
+
+  @media (max-width: 767px) {
+    .navbar {
+      #navbar-collapse-1 {
+        background-color: #fff;
+
+        li.dropdown {
+
+          a.dropdown-toggle {
+            color: #EA91EE;
+          }
+        }
+
+        li.nav-link > a {
+          color: #EA91EE;
+        }
+      }
+    }
+  }
+}
+
+#main-container {
+  @include content(#000, #999, #91EED4);
+}
+
+//cupcake theme: 
+//color-1: pink, 
+//color-2: light purple, 
+//color-3: turqoise (greenish blue), 
+//color-4: light yellow
+#main-container.theme-1 {
+  @include content(#8C86F3, #EA91EE, #91EED4);
+}
+
+#main-container.theme-2 {
+  @include content(#666, #777, #91EED4);
 }

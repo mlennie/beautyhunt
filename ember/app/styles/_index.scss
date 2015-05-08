@@ -1,15 +1,34 @@
-#index-page {
+@mixin content($color-1, $color-2, $color-3) {
+	#index-page {
 	
-	.modal-header {
-		border-bottom: none;
-	}
+		.modal-header {
+			border-bottom: none;
+		}
 
-	.modal-footer {
-		border-top: none;
-	}
+		.modal-footer {
+			border-top: none;
+		}
 
-	.tag {
-		border: 1px solid #5B4181;
-		border-radius: 5px;
+		.tag {
+			border: 1px solid #5B4181;
+			border-radius: 5px;
+		}
 	}
+}
+
+#main-container {
+  @include content(#000, #999, #91EED4);
+}
+
+//cupcake theme: 
+//color-1: pink, 
+//color-2: light purple, 
+//color-3: turqoise (greenish blue), 
+//color-4: light yellow
+#main-container.theme-1 {
+  @include content(#8C86F3, #EA91EE, #91EED4);
+}
+
+#main-container.theme-2 {
+  @include content(#666, #777, #91EED4);
 }
