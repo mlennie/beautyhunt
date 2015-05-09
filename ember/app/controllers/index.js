@@ -26,14 +26,39 @@ export default Ember.ArrayController.extend(SessionMixin, {
 	filters: [],
 
 	//computed properties
+	//get items based on whether there are filters or not
 	filteredItems: function() {
 		if (this.get('filters.length') == 0) {
 			return this.get('sortedItems');
+		} else {
+			return this.send('filterItems');
 		}
 	}.property('fiters', 'sortedItems', 'model'),
 
 
 	actions: {
+
+		//filter items based on filters given
+		filterItems: function() {
+			var _this = this;
+			var items = this.get('sortedItems');
+			var filters = this.get('filters');
+			var filterLength = filters.length;
+
+			//filter item if item has all tags in filters
+			var filteredItems = this.get('sortedItems').filter(function(item) {
+				var nbMatchingTags = 0;
+				filters.forEach(function(filter) {
+					//does filter equal one of item's tags
+					var tags = _this.store.all('item-tag', {item_id: item.id, name: filter});
+					if (tags.length > 0) { nbMatchingTags++; }
+				});
+				if (nbMatchingTags == filterLength) {
+					return true;
+				} else { return false; }
+			});
+			return filteredItems;
+		},
 
 		showLoginMessage: function() {				
 			var _this = this;
