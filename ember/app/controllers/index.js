@@ -35,6 +35,10 @@ export default Ember.ArrayController.extend(SessionMixin, {
 		}
 	}.property('fiters', 'sortedItems', 'model'),
 
+	tags: function() {
+		return this.store.all('tag');
+	}.property(),
+
 
 	actions: {
 

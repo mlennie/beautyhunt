@@ -1,0 +1,22 @@
+.row
+	.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1
+		h4.default-color Today
+		ul.list-group
+			each item in filteredItems itemController="item"
+				li.list-group-item
+					.row
+						.col-sm-4
+							p
+								em.color-2 = item.title
+							a.default-color.small href={item.url} target="_blank" 
+								| View website
+								span.margin-left-5 = fa-icon 'globe'
+						.col-sm-4
+
+							p.small.color-3 Tags: 
+							each tag in item.tags
+								span.small.margin-right-5 
+									button.inverse-default-color-button.rounded.small = tag.name
+						.col-sm-4
+							span.margin-left-10.pull-right.color-2 = fa-icon 'caret-square-o-up'
+							span.badge.pull-right.color-2-background 495

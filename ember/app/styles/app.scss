@@ -97,6 +97,18 @@
 
 	}
 
+	button.inverse-color-2-button {
+		border: 1px solid $color-2;
+		background-color: #fff;
+		color: $color-2;
+		margin-bottom: 3px;
+
+		&:focus, &:hover {
+			color: $color-2;
+		}
+
+	}
+
 	.rounded { border-radius: 5px;}
 
 	/* padding */

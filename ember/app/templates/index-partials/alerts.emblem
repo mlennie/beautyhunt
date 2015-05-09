@@ -1,0 +1,27 @@
+if itemCreationSuccessfull
+	.row
+		.col-md-6.col-md-offset-3
+			.alert.alert-success
+				| Beauty item added!
+if loginMessage
+	.alert.alert-success
+		| Please login or register first
+if loginSuccess
+	.alert.alert-success.alert-dismissible 
+		button type="button" class="close" data-dismiss="alert" aria-label="Close"
+			span aria-hidden="true"
+				| x
+		| Congrats, you have successfully signed in. Have fun! 
+if logoutSuccess
+	.alert.alert-success.alert-dismissible 
+		button type="button" class="close" data-dismiss="alert" aria-label="Close"
+			span aria-hidden="true"
+				| x
+		| You have been logged out. 
+if alreadyLoggedIn
+	.alert.alert-danger.alert-dismissible 
+		button type="button" class="close" data-dismiss="alert" aria-label="Close"
+			span aria-hidden="true"
+				 | x
+		| You are already logged in!
+br

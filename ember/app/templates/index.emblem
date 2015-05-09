@@ -3,68 +3,9 @@
 	br
 	br
 	.container
-		if itemCreationSuccessfull
-			.row
-				.col-md-6.col-md-offset-3
-					.alert.alert-success
-						| Beauty item added!
-		if loginMessage
-			.alert.alert-success
-				| Please login or register first
-		if loginSuccess
-			.alert.alert-success.alert-dismissible 
-				button type="button" class="close" data-dismiss="alert" aria-label="Close"
-					span aria-hidden="true"
-						| x
-				| Congrats, you have successfully signed in. Have fun! 
-		if logoutSuccess
-			.alert.alert-success.alert-dismissible 
-				button type="button" class="close" data-dismiss="alert" aria-label="Close"
-					span aria-hidden="true"
-						| x
-				| You have been logged out. 
-		if alreadyLoggedIn
-			.alert.alert-danger.alert-dismissible 
-				button type="button" class="close" data-dismiss="alert" aria-label="Close"
-					span aria-hidden="true"
-						 | x
-				| You are already logged in!
-		br
-		.row
-			.col-sm-4.col-sm-offset-4 
-				if currentUser
-					button.btn.inverse-default-color-button.center data-toggle="modal" data-target="#newItem"
-						span.center = fa-icon 'plus'
-						span.center  Add Item
-				else
-					br
-					button.btn.inverse-default-color-button.center click="showLoginMessage"
-						span.center = fa-icon 'plus'
-						span.center  Add Item
-				partial 'index-partials/new-item'
-		.row
-			.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1
-				br
-				h4.default-color Today
-				ul.list-group
-					each item in filteredItems itemController="item"
-						li.list-group-item
-							.row
-								.col-sm-4
-									p
-										em.color-2 = item.title
-									a.default-color.small href={item.url} target="_blank" 
-										| View website
-										span.margin-left-5 = fa-icon 'globe'
-								.col-sm-4
-
-									p.small.color-3 Tags: 
-									each tag in item.tags
-										span.small.margin-right-5 
-											button.inverse-default-color-button.rounded.small = tag.name
-								.col-sm-4
-									span.margin-left-10.pull-right.color-2 = fa-icon 'caret-square-o-up'
-									span.badge.pull-right.color-2-background 495
+		partial 'index-partials/alerts'
+		partial 'index-partials/item-options'
+		partial 'index-partials/item-list'
 	br
 	br
 	br
