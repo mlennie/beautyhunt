@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import ENV from "beauty-ember/config/environment";
 import SessionMixin from '../mixins/session';
-export default Ember.ArrayController.extend(SessionMixin, {
+export default Ember.Controller.extend(SessionMixin, {
 	sortProperties: ['created_at:desc'],
   sortedItems: Ember.computed.sort('model', 'sortProperties'),
 
@@ -23,17 +23,50 @@ export default Ember.ArrayController.extend(SessionMixin, {
 	clothes: null,
 	shoes: null,
 	accessories: null,
-	filters: [],
+	filters: [], //aray of tag ids
 
 	//computed properties
+	itemTags: function() {
+		return this.store.all('item-tag');
+	}.property('model'),
+
 	//get items based on whether there are filters or not
 	filteredItems: function() {
 		if (this.get('filters.length') == 0) {
 			return this.get('sortedItems');
 		} else {
-			return this.send('filterItems');
+			var _this = this;
+			var items = this.get('sortedItems');
+			var filterIds = this.get('filters');
+			var filterLength = filterIds.length;
+			var results;
+
+			//filter item if item has all tags in filters
+			results = this.get('sortedItems').filter(function(item) {
+				var nbMatchingTags = 0;
+				filterIds.forEach(function(filterId) {
+
+					//does filter equal one of item's tags (find through itemTag)
+					_this.get('itemTags').forEach(function(itemTag) {
+						if (itemTag.get('item_id') == item.id &&
+								itemTag.get('tag_id') == filterId) {
+							nbMatchingTags++; 
+							return;
+						}
+					});
+				});
+
+				//make sure item's matching tags are same number as filter array length
+				if (nbMatchingTags == filterLength) {
+					return true;
+				} else { 
+					return false; 
+				}
+
+			});
+			return results;
 		}
-	}.property('fiters', 'sortedItems', 'model'),
+	}.property('filters','filters.[]', 'sortedItems', 'model'),
 
 	tags: function() {
 		return this.store.all('tag');
@@ -41,28 +74,6 @@ export default Ember.ArrayController.extend(SessionMixin, {
 
 
 	actions: {
-
-		//filter items based on filters given
-		filterItems: function() {
-			var _this = this;
-			var items = this.get('sortedItems');
-			var filters = this.get('filters');
-			var filterLength = filters.length;
-
-			//filter item if item has all tags in filters
-			var filteredItems = this.get('sortedItems').filter(function(item) {
-				var nbMatchingTags = 0;
-				filters.forEach(function(filter) {
-					//does filter equal one of item's tags
-					var tags = _this.store.all('item-tag', {item_id: item.id, name: filter});
-					if (tags.length > 0) { nbMatchingTags++; }
-				});
-				if (nbMatchingTags == filterLength) {
-					return true;
-				} else { return false; }
-			});
-			return filteredItems;
-		},
 
 		showLoginMessage: function() {				
 			var _this = this;

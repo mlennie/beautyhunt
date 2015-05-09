@@ -13,6 +13,24 @@
 			border: 1px solid #5B4181;
 			border-radius: 5px;
 		}
+
+		#filter-select {
+			position: absolute;
+			display: none;
+			z-index: 1;
+			background-color: #fff;
+			border: 1px solid $color-3;
+			width: 180px;
+			border-radius: 5px;
+			hr {
+				margin: 0 0 5px 0;
+			}
+			p {
+				margin-left: 10px;
+				color: $color-1;
+				cursor: pointer;
+			}
+		}
 	}
 }
 

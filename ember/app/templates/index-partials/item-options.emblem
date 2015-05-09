@@ -12,8 +12,11 @@
 		partial 'index-partials/new-item'
 .row
 	.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1
-		button.inverse-color-2-button.rounded.small click="showLoginMessage"
+		button.inverse-color-2-button.rounded.small#filter-button
 			span.center = fa-icon 'plus'
 			span.center  Filter
-		each tag in tags
-			p = tag.name
+		#filter-select
+			each tag in tags
+				hr
+				p data-tag=tag.id
+					=tag.name
