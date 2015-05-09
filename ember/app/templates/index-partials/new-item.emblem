@@ -5,7 +5,7 @@
 				button type="button" class="close" data-dismiss="modal" aria-label="Close"
 					span aria-hidden="true"
 						| x
-				h4.modal-title.purple
+				h4.modal-title.color-1
 					| Add Item
 			.modal-body
 				if isLoading
@@ -40,7 +40,7 @@
 							= input type="checkbox" checked=accessories
 							span.margin-left-10.margin-right-20 Accessories
 					.modal-footer
-						button.btn.inverse-purple-button type="button" data-dismiss="modal"
+						button.btn.inverse-default-color-button type="button" data-dismiss="modal"
 							| Close
-						button.btn.purple-button type="submit"
+						button.btn.default-color-button type="submit"
 							| Add Item

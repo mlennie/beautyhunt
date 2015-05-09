@@ -1,4 +1,4 @@
-#main-container.theme-1
+#main-container
 	.container-fluid.fixed-nav
 		nav.navbar role="navigation"
 			.container-fluid
@@ -11,6 +11,25 @@
 					h4#logo = link-to "index" | Beauty Insider
 				.collapse.navbar-collapse#navbar-collapse-1
 					ul.nav.navbar-nav.navbar-right
+						li.dropdown
+							a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+								| Change Style
+								span.caret
+							ul.dropdown-menu#main-nav-dropdown role="menu"
+								li.color-2 
+									a{action 'changeStyle' 'default'} Classic
+								li.color-2 
+									a{action 'changeStyle' 'theme-1'} Cupcake
+								li.color-2 
+									a{action 'changeStyle' 'theme-2'} Yacht
+								li.color-2 
+									a{action 'changeStyle' 'theme-3'} Beach
+								li.color-2 
+									a{action 'changeStyle' 'theme-6'} Natural
+								li.color-2 
+									a{action 'changeStyle' 'theme-4'} Peach
+								
+
 						if currentUser
 							li.dropdown
 								a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-expanded="false"

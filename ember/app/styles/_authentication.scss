@@ -10,19 +10,59 @@
 	}
 }
 
+//default (no theme): 
+//color-1: black, 
+//color-2: black, 
+//color-3: grey
 #main-container {
-  @include content(#000, #999, #91EED4);
+  @include content(#000, #000, #999);
 }
 
 //cupcake theme: 
-//color-1: pink, 
-//color-2: light purple, 
+//color-1: light purple, 
+//color-2: pink, 
 //color-3: turqoise (greenish blue), 
 //color-4: light yellow
 #main-container.theme-1 {
   @include content(#8C86F3, #EA91EE, #91EED4);
 }
 
+//boat theme: 
+//color-1: navy blue, 
+//color-2: red, 
+//color-3: turqoise (greenish blue)
 #main-container.theme-2 {
-  @include content(#666, #777, #91EED4);
+  @include content(#031927, #BA1200, #9DD1F1);
+}
+
+//blue theme: 
+//color-1: medium blue, 
+//color-2: medium blue, 
+//color-3: light grey
+#main-container.theme-3 {
+  @include content(#FF01FB, #02A9EA, #FAFF00);
+}
+
+//peach theme: 
+//color-1: dark blue, 
+//color-2: bright pink, 
+//color-3: bright orangeish pink
+#main-container.theme-4 {
+  @include content(#1B065E, #FF47DA, #FF87AB);
+}
+
+//forest theme: 
+//color-1: dark blue, 
+//color-2: bright pink, 
+//color-3: bright orangeish pink
+#main-container.theme-5 {
+  @include content(#4A766A, #75A497, #DEBFA2);
+}
+
+//60s theme: 
+//color-1: dark blue, 
+//color-2: bright pink, 
+//color-3: bright orangeish pink
+#main-container.theme-6 {
+  @include content(#8C5E58, #FFA69E, #A9F0D1);
 }

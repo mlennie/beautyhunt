@@ -8,6 +8,16 @@ export default Ember.Controller.extend(
   AuthenticationMixin, {
 
 	actions: {
+    changeStyle: function(newClass) {
+
+      //remove last class and set new one to set global style
+      Ember.$('#main-container').removeClass();
+      Ember.$('#main-container').addClass(newClass);
+
+      //add to session so will remember
+      window.localStorage.setItem('style', newClass);
+    },
+
 		invalidateSession: function() {
 			// Custom ajax call for resending . 
       Ember.$.ajax({

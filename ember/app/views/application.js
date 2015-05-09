@@ -24,5 +24,15 @@ export default Ember.View.extend({
 	     fjs.parentNode.insertBefore(js, fjs);
 	   }(document, 'script', 'facebook-jssdk'));
 
+	}.on('didInsertElement'),
+
+	setStyle: function() {
+		var style = window.localStorage.getItem('style');
+		
+		if (style) {
+			//remove last class and set new one to set global style
+      Ember.$('#main-container').removeClass();
+      Ember.$('#main-container').addClass(style);
+		}
 	}.on('didInsertElement')
 });
