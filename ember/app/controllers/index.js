@@ -56,7 +56,7 @@ export default Ember.Controller.extend(SessionMixin, {
 					});
 				});
 
-				//make sure item's matching tags are same number as filter array length
+				//make sure item'sr matching tags are same number as filter array length
 				if (nbMatchingTags == filterLength) {
 					return true;
 				} else { 
@@ -74,6 +74,10 @@ export default Ember.Controller.extend(SessionMixin, {
 
 
 	actions: {
+
+		removeFilter: function(tagId) {
+			this.get('filters').removeObject(tagId);
+		},
 
 		showLoginMessage: function() {				
 			var _this = this;

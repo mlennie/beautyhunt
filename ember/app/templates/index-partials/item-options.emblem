@@ -10,6 +10,7 @@
 				span.center = fa-icon 'plus'
 				span.center  Add Item
 		partial 'index-partials/new-item'
+br
 .row
 	.col-sm-10.col-sm-offset-1.col-md-10.col-md-offset-1
 		button.inverse-color-2-button.rounded.small#filter-button
@@ -20,3 +21,9 @@
 				hr
 				p data-tag=tag.id
 					=tag.name
+		span#selected-filters
+			each filter in filters itemController="tag"
+				button.inverse-default-color-button.rounded.small.margin-left-10#filter-delete{action 'removeFilter' filter.tag.id} 
+					span.pull-right.margin-left-5 
+						= fa-icon 'remove'
+					= filter.tag.name

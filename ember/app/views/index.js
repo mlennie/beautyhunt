@@ -4,8 +4,13 @@ import ENV from "beauty-ember/config/environment";
 export default Ember.View.extend({
 	
 	toggleFilterSelect: function() {
+		Ember.$('body').on('click', function() {
+			Ember.$('#filter-select').hide();
+		});
 		//toggle tags-select when click filter button
-		Ember.$('#filter-button').on('click', function(){
+		Ember.$('body').on('click', '#filter-button', function(e){
+			e.preventDefault();
+			e.stopPropagation();
 			Ember.$('#filter-select').toggle();
 		});
 	}.on('didInsertElement'),
@@ -14,9 +19,11 @@ export default Ember.View.extend({
 	addFilter: function() {
 		var _this = this;
 		Ember.$('#filter-select > p').on('click', function() {
-			var tag = Ember.$(this).data('tag');
-			_this.get('controller.filters').pushObject(tag);
+			var tagId = Ember.$(this).data('tag');
+			_this.get('controller.filters').pushObject(tagId);
 			Ember.$('#filter-select').toggle();
 		});
+
+		
 	}.on('didInsertElement')
 });
