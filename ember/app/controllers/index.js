@@ -23,8 +23,14 @@ export default Ember.ArrayController.extend(SessionMixin, {
 	clothes: null,
 	shoes: null,
 	accessories: null,
+	filters: [],
 
 	//computed properties
+	filteredItems: function() {
+		if (this.get('filters.length') == 0) {
+			return this.get('sortedItems');
+		}
+	}.property('fiters', 'sortedItems', 'model'),
 
 
 	actions: {

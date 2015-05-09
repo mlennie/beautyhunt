@@ -11,19 +11,6 @@ export default Ember.ObjectController.extend({
 				tags.push(tag);
 			}
 		});
-		var name; 
-		var names = [];
-		for(var i = 0; i < tags.length; i++) {
-			if (i < (tags.length - 1)) {
-				name = tags[i].get('name'); //+ ",";
-				console.log(name);
-			} else {
-				name = tags[i].get('name');
-				console.log(name);
-			}
-			names[i] = name;
-		}
-		console.log(names)
-		return names;
-	}.property()
+		return tags;
+	}.property('model')
 });

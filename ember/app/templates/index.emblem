@@ -47,7 +47,7 @@
 				br
 				h4.default-color Today
 				ul.list-group
-					each item in sortedItems itemController="item"
+					each item in filteredItems itemController="item"
 						li.list-group-item
 							.row
 								.col-sm-4
@@ -61,7 +61,7 @@
 									p.small.color-3 Tags: 
 									each tag in item.tags
 										span.small.margin-right-5 
-											button.inverse-default-color-button.rounded.small = tag
+											button.inverse-default-color-button.rounded.small = tag.name
 								.col-sm-4
 									span.margin-left-10.pull-right.color-2 = fa-icon 'caret-square-o-up'
 									span.badge.pull-right.color-2-background 495
