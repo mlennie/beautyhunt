@@ -41,7 +41,7 @@ br
 						= input type="checkbox" name="rememberMe"
 						span.margin-left-10 Remember me
 					br
-					button.btn.purple-button.center.full-width type="submit" Login
+					button.btn.default-color-button.center.full-width type="submit" Login
 					br
 					h6.center
 						div Not a member?

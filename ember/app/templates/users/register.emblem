@@ -53,7 +53,7 @@ br
 							//label for="passwordConfirmation" Password Confirmation
 							= input class='form-control' value=passwordConfirmation placeholder='Password Confirmation' type='password' required=true
 						br
-						button.margin-top-10.btn.purple-button.full-width type="submit" Register
+						button.margin-top-10.btn.default-color-button.full-width type="submit" Register
 						br
 						br
 						| Already have an account? Sign in

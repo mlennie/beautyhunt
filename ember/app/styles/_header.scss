@@ -15,6 +15,10 @@
 
       li.dropdown {
 
+        &.style-dropdown-margin {
+          margin-top: 7px;
+        }
+
         a:focus, a:hover {
           background-color: $color-2;
         }
@@ -36,11 +40,19 @@
     .nav-link {
       margin-right: 10px;
       margin-top: 10px;
+
+      &.not-logged-in {
+        margin-top: 7px;
+      }
     }
 
     #logo {
       margin-top: 20px;
       margin-left: 10px;
+
+      &.logo-margin {
+        margin-top: 15px;
+      }
 
       a {
         color: #fff;

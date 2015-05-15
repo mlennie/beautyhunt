@@ -8,10 +8,10 @@
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					h4#logo = link-to "index" | Beauty Insider
+					h4#logo class=currentUser:logo-margin = link-to "index" | Beauty Insider
 				.collapse.navbar-collapse#navbar-collapse-1
 					ul.nav.navbar-nav.navbar-right
-						li.dropdown
+						li.dropdown class=currentUser::style-dropdown-margin
 							a.dropdown-toggle href="#" data-toggle="dropdown" role="button" aria-expanded="false"
 								| Change Style
 								span.caret
@@ -40,9 +40,9 @@
 									li
 										a{action 'invalidateSession'} Logout
 						else
-							li.nav-link 
+							li.nav-link.not-logged-in
 								= link-to "users.register" | Register
-							li.nav-link 
+							li.nav-link.not-logged-in
 								= link-to "users.login" | Login
 							.nav.navbar-nav.navbar-right#facebook-nav
 								button#facebook-login.center.btn.btn-primary.full-width.navbar-btn click='authenticateWithFacebook' 
