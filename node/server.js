@@ -34,6 +34,12 @@ db.once('open', function (callback) {
   app.use('/api/items', items);
   app.use('/api/identities', identities);
 	app.get('*', function(req, res) { res.send('Hello yoda!!'); });
+
+  //catch all error handler
+  app.use(function (err, req, res, next) {
+    res.status(500);
+    return res.render('error', { error: err });
+  });
  
 	app.listen(database.port);
 	console.log('Running on http://localhost:' + database.port);
