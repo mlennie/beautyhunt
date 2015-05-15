@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y curl
 
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup | bash -
-RUN sudo apt-get install -y nodejs git
+RUN sudo apt-get install -y nodejs git nano
 
 #get ember, bower and phantomjs
 RUN npm install -g ember-cli@0.2.3 bower@1.4.1 phantomjs@1.9.8
