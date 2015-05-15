@@ -9,7 +9,7 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.23.3/install.sh | b
 RUN #!/bin/bash source ~/.bashrc 
 RUN #!/bin/bash nvm install 0.12
 
-RUN npm install supervisor -g
+Run npm install forever@0.14.1 -g
 
 EXPOSE 8080
 
