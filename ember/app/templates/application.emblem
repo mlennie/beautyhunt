@@ -8,7 +8,7 @@
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					h4#logo class=currentUser:logo-margin = link-to "index" | Beauty Insider
+					h4#logo class=currentUser:logo-margin = link-to "index" | Fashion List
 				.collapse.navbar-collapse#navbar-collapse-1
 					ul.nav.navbar-nav.navbar-right
 						li.dropdown class=currentUser::style-dropdown-margin

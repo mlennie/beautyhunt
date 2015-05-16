@@ -27,7 +27,7 @@ RUN npm install
 CMD ["ember", "serve", "--watcher", "polling", "--proxy", "http://192.168.10.10:8080"]
 
 #start app in interactive mode
-#docker run --rm -i -t -p 4200:80 -p 35729:35729 -v /:/webapp mlennie/beauty-ember
+#docker run --rm -i -t -p 4200:4200 -p 35729:35729 -v /:/webapp mlennie/beauty-ember
 
 #start the server
 #ember serve --watcher polling --proxy http://192.168.10.10:8080
