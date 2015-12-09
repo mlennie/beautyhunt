@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'test') {
 
 if (process.env.NODE_ENV === 'production') {
   ENV.APP.API_URL = 'http://46.101.147.71:8080'
-  ENV.APP.EMBER_URL = 'http://46.101.147.71:4200'
+  ENV.APP.EMBER_URL = 'http://fashionlist.co'
 }
 
 module.exports = ENV;
